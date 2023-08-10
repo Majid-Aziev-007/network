@@ -16,6 +16,10 @@ class Topic(models.Model):
 class Meeting(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
+    meeting_date = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
     pub_date = models.DateTimeField(auto_now_add=True)
     address = models.TextField()
     author = models.ForeignKey(
