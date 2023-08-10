@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+Нетворкинг Встречи
+{% endblock %} 
+{% block content %}
+<div class="container">
+  <h1>Последние нетворк встречи на сайте</h1>
+  {% for meeting in meeting_list %}
+    <ul>
+      <li>
+        Название: {{ meeting.title }}
+      </li>
+      <li>
+        Автор: {{ meeting.author }}
+      </li>
+      <li>
+        Дата публикации: {{ meeting.pub_date|date:"d E Y" }}
+      </li>
+    </ul>
+    <p>{{ meeting.text }}</p>    
+      {% if meeting.topic %}   
+        <a href="#">{{ meeting.topic }}</a>
+      {% endif %} 
+    {% if not forloop.last %}<hr>{% endif %}
+  {% endfor %} 
+</div>
+{% endblock %}
