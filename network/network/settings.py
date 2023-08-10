@@ -126,3 +126,5 @@ STATIC_ROOT = os.path.join(os.path.join(BASE_DIR, 'static'), 'static')
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'meetings:index'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
