@@ -4,6 +4,8 @@
     <head>    
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load django_bootstrap5 %}
+        {% bootstrap_css %}
         <title>{% block title %}{% endblock %}</title>
       </head>   
   </head>
@@ -11,11 +13,11 @@
     <header>
       {% include 'includes/header.html' %}
     </header>
-    <main>
+    <div class="container">
       {% block content %}
         Контент не подвезли :(
       {% endblock %}
-    </main>
+    </div>
     <footer>
       {% include 'includes/footer.html' %} 
     </footer>

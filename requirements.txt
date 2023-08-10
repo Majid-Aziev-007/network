@@ -1,3 +1,7 @@
-Django==2.2.9
+asgiref==3.4.1
+Django==3.2.20
+django-bootstrap5==22.2
 pytz==2023.3
 sqlparse==0.4.4
+typing_extensions==4.7.1
+tzdata==2023.3

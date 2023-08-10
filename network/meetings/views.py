@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Meeting, Topic
 
 def index(request):
@@ -9,3 +9,23 @@ def index(request):
     }
 
     return render(request, 'meetings/index.html', context)
+
+def topic_meetings(request, slug):
+
+    topic = get_object_or_404(Topic, slug=slug)
+    meeting_list = Meeting.objects.filter(topic=topic).order_by('-pub_date')[:10]
+
+    context = {
+        'topic': topic,
+        'meeting_list': meeting_list,
+    }
+    return render(request, 'meetings/meetings_list.html', context) 
+
+def meeting_detail(request, meeting_id):
+
+    meeting = get_object_or_404(Meeting, pk=meeting_id)
+
+    context = {
+        'meeting': meeting,
+    }
+    return render(request, 'meetings/meeting_detail.html', context)

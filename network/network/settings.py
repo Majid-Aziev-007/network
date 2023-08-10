@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'meetings.apps.MeetingsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -105,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -120,3 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.join(BASE_DIR, 'static'), 'static')
+
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'meetings:index'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
