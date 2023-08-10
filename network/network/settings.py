@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'meetings.apps.MeetingsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
