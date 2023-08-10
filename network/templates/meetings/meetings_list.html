@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+Записи {{ topic }}
+{% endblock %} 
+{% block content %}
+<div class="container">
+  <h1>{{ topic }}</h1>
+  <p>
+    {{ topic.description }}
+  </p>
+  {% for meeting in meeting_list %}
+  <ul>
+    <li>
+      Название: {{ meeting.title }}
+    </li>
+    <li>
+      Автор: {{ meeting.author }}
+    </li>
+    <li>
+      Дата публикации: {{ meeting.pub_date|date:"d E Y" }}
+    </li>
+  </ul>
+  <p>{{ meeting.text }}</p>    
+  {% if not forloop.last %}<hr>{% endif %}
+{% endfor %} 
+</div>
+{% endblock %} 

@@ -19,7 +19,7 @@
     </ul>
     <p>{{ meeting.text }}</p>    
       {% if meeting.topic %}   
-        <a href="#">{{ meeting.topic }}</a>
+        <a href="{% url 'meetings:topic_list' meeting.topic.slug %}">{{ meeting.topic }}</a>
       {% endif %} 
     {% if not forloop.last %}<hr>{% endif %}
   {% endfor %} 
