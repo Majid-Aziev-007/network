@@ -20,3 +20,12 @@ def topic_meetings(request, slug):
         'meeting_list': meeting_list,
     }
     return render(request, 'meetings/meetings_list.html', context) 
+
+def meeting_detail(request, meeting_id):
+
+    meeting = get_object_or_404(Meeting, pk=meeting_id)
+
+    context = {
+        'meeting': meeting,
+    }
+    return render(request, 'meetings/meeting_detail.html', context)

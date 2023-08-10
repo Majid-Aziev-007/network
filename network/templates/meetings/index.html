@@ -14,7 +14,7 @@
       {% if meeting.topic %}   
         <a href="{% url 'meetings:topic_list' meeting.topic.slug %}">{{ meeting.topic }}</a>
       {% endif %} 
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <a href="{% url 'meetings:meeting_detail' meeting.pk %}" class="btn btn-primary">Перейти</a>
     </div>
   </div>
   {% endfor %} 
