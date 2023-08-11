@@ -5,7 +5,6 @@
 
 {% block section %}
 
-{% with request.resolver_match.view_name as view_name %} 
   {% if not request.user.is_authenticated %}
   <section style="background-color: #000000; color: white;">
     <div class="container jus">
@@ -41,30 +40,55 @@
   </section>
 
   {% endif %}
-{% endwith %}
 {% endblock %}
 
 {% block content %}
 
-  <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-family: 'Naston'; color: white;">
-    Нетворкинг Встречи
-  </h1> 
+  <section>
+    <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-family: 'Naston'; color: white;">
+      Нетворкинг Встречи
+    </h1> 
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for meeting in meeting_list %}
-    <div class="col">
-      <div class="card h-100" style="background-color: #DEDEDE; font-family: 'Naston', sans-serif; border-radius: 20px;">
-        <div class="card-body d-flex flex-column">
-          <p class="card-text"><small class="text-body-secondary">@{{ meeting.author }}</small></p> 
-          <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h2>
-          {% if meeting.topic %}   
-            <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold; margin-bottom: 15px;">Тема: {{ meeting.topic }}</a>
-          {% endif %} 
-          <p class="card-text">{{ meeting.description|truncatechars:100 }}</p>
-          <a href="{% url 'meetings:meeting_detail' meeting.pk %}" class="align-self-end btn btn-lg btn-block btn-black" style="margin-top: auto;">Перейти</a>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for meeting in meeting_list %}
+      <div class="col">
+        <div class="card h-100" style="background-color: #DEDEDE; font-family: 'Naston', sans-serif; border-radius: 20px;">
+          <div class="card-body d-flex flex-column">
+            <p class="card-text"><small class="text-body-secondary">@{{ meeting.author }}</small></p> 
+            <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h2>
+            {% if meeting.topic %}   
+              <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold; margin-bottom: 15px;">Тема: {{ meeting.topic }}</a>
+            {% endif %} 
+            <p class="card-text">{{ meeting.description|truncatechars:100 }}</p>
+            <a href="{% url 'meetings:meeting_detail' meeting.pk %}" class="align-self-end btn btn-lg btn-block btn-black" style="margin-top: auto;">Перейти</a>
+          </div>
         </div>
       </div>
+      {% endfor %} 
     </div>
-    {% endfor %} 
-  </div>
+  </section>
+
+  {% if not request.user.is_authenticated %}
+  <section style="margin-top: 100px;">
+
+    <div class="row">
+      <center>
+        <div class="col" style="font-family: 'Naston', sans-serif; color: white;">
+            <h1>Присоединяйтесь</h1>
+
+            <p>
+              Готовы расширить свой кругозор? <br>
+              Не упустите целый мир возможностей. <br>
+              Зарегистрируйтесь в сети и откройте двери к успеху. <br>
+              Пришло время налаживать связи!
+            </p>
+
+            <a href="{% url 'users:signup' %}" class="align-self-end btn btn-lg btn-block btn-white" style="margin-top: 30px; width: 350px;">Зарегистрироваться</a>
+        </div>
+      </center>
+    </div>
+
+  </section>
+  {% endif %}
+
 {% endblock %}
