@@ -15,6 +15,26 @@
     
         <p class="card-text">{{ meeting.description|linebreaks }}</p>
         <p class="card-text">Адрес: {{ meeting.address }}</p>
+
+        <p class="card-text">Количество Заявок: {{ presence_quantity }}</p>
+
+        {% if request.user.is_authenticated %}
+          {% if presence %}
+            <a
+              class="btn btn-lg btn-light"
+              href="{% url 'meetings:meeting_not_presence' meeting.id %}" role="button"
+            >
+              Не Буду
+            </a>
+          {% else %}
+              <a
+                class="btn btn-lg btn-primary"
+                href="{% url 'meetings:meeting_presence' meeting.id %}" role="button"
+              >
+                Буду
+              </a>
+          {% endif %}
+       {% endif %}
       </div>
     </div>
   </div>
