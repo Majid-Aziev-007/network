@@ -37,3 +37,18 @@ class Meeting(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Presence(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='participant',
+        null=True
+    )
+
+    meeting = models.ForeignKey(
+        Meeting,
+        on_delete=models.CASCADE,
+        related_name='meeting'
+    )
