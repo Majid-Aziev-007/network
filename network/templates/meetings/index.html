@@ -57,8 +57,9 @@
             <p class="card-text"><small class="text-body-secondary">@{{ meeting.author }}</small></p> 
             <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h2>
             {% if meeting.topic %}   
-              <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold; margin-bottom: 15px;">Тема: {{ meeting.topic }}</a>
+              <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
             {% endif %} 
+            <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
             <p class="card-text">{{ meeting.description|truncatechars:100 }}</p>
             <a href="{% url 'meetings:meeting_detail' meeting.pk %}" class="align-self-end btn btn-lg btn-block btn-black" style="margin-top: auto;">Перейти</a>
           </div>
