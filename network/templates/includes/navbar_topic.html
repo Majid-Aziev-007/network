@@ -1,0 +1,21 @@
+{% with request.resolver_match as view_name %}
+
+  <ul class="nav nav-underline justify-content-center" style="font-family: 'Naston'; margin-top: -50px; margin-bottom: 50px;">
+    <li class="nav-item">
+      <a class="nav-link {% if view_name  == 'meetings:index' %}active{% endif %}" style="color: white;" aria-current="page" href="{% url 'meetings:index' %}">Общее</a>
+    </li>    
+    <li class="nav-item">
+      <a class="nav-link {% if request.resolver_match.kwargs.slug == 'entrepreneurship' %}active{% endif %}" style="color: white;" aria-current="page" href="{% url 'meetings:topic_list' 'entrepreneurship' %}">Предпринимательство</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.resolver_match.kwargs.slug == 'develop' %}active{% endif %}" style="color: white;" href="{% url 'meetings:topic_list' 'develop' %}">Программирование</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.resolver_match.kwargs.slug == 'design' %}active{% endif %}" style="color: white;" href="{% url 'meetings:topic_list' 'design' %}">Дизайн</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.resolver_match.kwargs.slug == 'smm' %}active{% endif %}" style="color: white;" href="{% url 'meetings:topic_list' 'smm' %}">SMM</a>
+    </li>
+  </ul>
+
+{% endwith %}

@@ -49,25 +49,7 @@
       Нетворкинг Встречи
     </h1> 
 
-    {% with request.resolver_match.view_name as view_name %}  
-      <ul class="nav nav-underline justify-content-center" style="font-family: 'Naston'; margin-top: -50px; margin-bottom: 50px;">
-        <li class="nav-item">
-          <a class="nav-link {% if view_name  == 'meetings:index' %}active{% endif %}" style="color: white;" aria-current="page" href="#">Общее</a>
-        </li>    
-        <li class="nav-item">
-          <a class="nav-link {% if view_name  == 'meetings:topic_list:entrepreneurship' %}active{% endif %}" style="color: white;" aria-current="page" href="{% url 'meetings:topic_list' 'entrepreneurship' %}">Предпринимательство</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="color: white;" href="#">Программирование</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="color: white;" href="#">Дизайн</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="color: white;" aria-disabled="true">SMM</a>
-        </li>
-      </ul>
-    {% endwith %}
+    {% include 'includes/navbar_topic.html' %} 
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for meeting in meeting_list %}
