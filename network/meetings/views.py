@@ -2,14 +2,19 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Meeting, Topic, Presence
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 
 User = get_user_model()
 
 def index(request):
     meeting_list = Meeting.objects.all().order_by('-pub_date')
 
+    paginator = Paginator(meeting_list, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'meeting_list': meeting_list
+        'page_obj': page_obj
     }
 
     return render(request, 'meetings/index.html', context)
@@ -19,9 +24,17 @@ def topic_meetings(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
     meeting_list = Meeting.objects.filter(topic=topic).order_by('-pub_date')[:10]
 
+    paginator = Paginator(meeting_list, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj
+    }
+
     context = {
         'topic': topic,
-        'meeting_list': meeting_list,
+        'page_obj': page_obj,
     }
     return render(request, 'meetings/meetings_list.html', context) 
 
