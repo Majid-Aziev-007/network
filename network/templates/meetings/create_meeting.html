@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    Добавить запись
+{% endblock %} 
+{% load django_bootstrap5 %}
+{% block content %}
+    <main>
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8 p-5">
+            <div class="card">
+              <div class="card-header">       
+                Новый пост             
+              </div>
+              <div class="card-body">
+                  <form method="post" enctype="multipart/form-data" action="{% url 'meetings:meeting_create' %}">
+                    {% csrf_token %}                    
+                    {% bootstrap_form form %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% bootstrap_button button_type="submit" content="Создать" %}
+                  </form>             
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}
