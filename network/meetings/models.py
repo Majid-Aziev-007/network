@@ -14,6 +14,17 @@ class Topic(models.Model):
 
 
 class Meeting(models.Model):
+    CHOICES = (
+        ('OFF', 'Offline'),
+        ('ON', 'Online'),
+    )
+
+    type = models.CharField(
+        max_length=300,
+        choices=CHOICES,
+        blank=True,
+        null=True
+    )
     title = models.CharField(max_length=200)
     description = models.TextField()
     meeting_date = models.DateTimeField(

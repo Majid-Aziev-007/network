@@ -6,6 +6,11 @@
   <div class="col">
     <div class="card" style="background-color: #white; font-family: 'Naston', sans-serif; border-radius: 10px;">
       <div class="card-body d-flex flex-column">
+
+        {% if meeting.type == "ON" %}   
+          <h2 class="card-title" style="font-weight: bold; margin-top: -10px; margin-bottom: 30px; text-align: center;">ОНЛАЙН МЕРОПРИЯТИЕ</h2>
+        {% endif %}
+
         <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h2>
         {% if meeting.topic %}   
           <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
@@ -14,8 +19,13 @@
         <p class="card-text" style="margin-top: -20px;"><small class="text-body-secondary">Автор: @{{ meeting.author }}</small></p>
     
         <p class="card-text">{{ meeting.description|linebreaks }}</p>
-        <p class="card-text">Адрес: {{ meeting.address }}</p>
 
+        {% if meeting.type == "ON" %}   
+          <a href="{{ meeting.address }}" class="nav-link">Ссылка: {{ meeting.address }}</a>
+        {% else %}   
+          <p class="card-text">Адрес: {{ meeting.address }}</p>
+        {% endif %}
+ 
         <p class="card-text">Количество Заявок: {{ presence_quantity }}</p>
 
         {% if request.user.is_authenticated %}
