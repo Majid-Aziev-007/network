@@ -76,6 +76,8 @@
 
   </section>
 
+  {{ request.user.get_group_permissions }}
+
   {% if not request.user.is_authenticated %}
   <section style="margin-top: 100px;">
 
