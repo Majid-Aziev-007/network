@@ -1,0 +1,20 @@
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation" class="my-5" style="font-family: 'Naston', sans-serif;">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="btn btn-light" href="?page={{ page_obj.previous_page_number }}">
+          Предыдущая
+        </a>
+      </li>
+    {% endif %}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="btn btn-light" href="?page={{ page_obj.next_page_number }}">
+          Следующая
+        </a>
+      </li>
+    {% endif %}    
+  </ul>
+</nav>
+{% endif %}
