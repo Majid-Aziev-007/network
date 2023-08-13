@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('topic/<slug:slug>/', views.topic_meetings, name='topic_list'),
     path('meetings/<int:meeting_id>/', views.meeting_detail, name='meeting_detail'),
+    path('meetings/create/', views.meeting_create, name='meeting_create'),
     path(
         'meetings/<int:meeting_id>/presence/',
         views.meeting_presence,
