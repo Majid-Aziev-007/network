@@ -8,6 +8,11 @@
       <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'users:logout' %}" style="background-color: black; color: white;">Выйти</a>
       </li>
+      {% if request.user.get_group_permissions %}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'meetings:meeting_create' %}" style="background-color: black; color: white;">Создать Нетворк</a>
+        </li>
+      {% endif %}
     {% else %}
       <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'users:login' %}" style="background-color: black; color: white;">Войти</a>
