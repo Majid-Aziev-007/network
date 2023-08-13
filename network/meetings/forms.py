@@ -9,5 +9,12 @@ class MeetingForm(ModelForm):
 
         model = Meeting
 
-        fields = ('type', 'title', 'description', 'meeting_date', 'address', 'topic')
-
+        fields = ('type', 'title', 'description', 
+                  'meeting_date', 'address', 'topic')
+        labels = {'type' : 'Тип Встречи', 
+                  'title': 'Название', 
+                  'description': 'Описание', 
+                  'meeting_date': 'День Нетворка', 
+                  'address': 'Адрес / Ссылка', 
+                  'topic': 'Тематика'
+                  }

@@ -62,7 +62,6 @@ def meeting_detail(request, meeting_id):
 
 @login_required
 def meeting_create(request):
-    print(request.user.get_group_permissions())
     if request.user.get_group_permissions():
         form = MeetingForm(request.POST, files=request.FILES or None)
         if request.method == 'POST':
