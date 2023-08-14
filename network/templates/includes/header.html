@@ -8,6 +8,9 @@
       <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'users:logout' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Выйти</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'customers:profile' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Профиль</a>
+      </li>
       {% if request.user.get_group_permissions %}
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="{% url 'meetings:meeting_create' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Создать Нетворк</a>
