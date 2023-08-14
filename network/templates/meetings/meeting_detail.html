@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Пост {{ title_text }}
+NetWork - Место Встречи
 {% endblock %} 
 {% block content %}
   <div class="col">
@@ -31,14 +31,14 @@
         {% if request.user.is_authenticated %}
           {% if presence %}
             <a
-              class="btn btn-lg btn-light"
+              class="btn btn-lg btn-black"
               href="{% url 'meetings:meeting_not_presence' meeting.id %}" role="button"
             >
               Не Буду
             </a>
           {% else %}
               <a
-                class="btn btn-lg btn-primary"
+                class="btn btn-lg btn-black"
                 href="{% url 'meetings:meeting_presence' meeting.id %}" role="button"
               >
                 Буду

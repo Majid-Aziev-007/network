@@ -1,20 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-Нетворкинг Встречи
+NetWork - Место Встречи
 {% endblock %} 
 
 {% block section %}
-<style>
-  .animstart {
-    opacity: 0;
-    animation: ani 2.5s forwards;
-  }
 
-  @keyframes ani {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-  }
-</style>
   {% if not request.user.is_authenticated %}
   <section class="animstart" style="color: white;">
     <div class="container jus">
