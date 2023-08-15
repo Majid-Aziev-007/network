@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    Добавить Нетворк
+{% endblock %} 
+{% load django_bootstrap5 %}
+{% block content %}
+    <main>
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8 p-5">
+            <div class="card" style="font-family: 'Naston', sans-serif;">
+              <div class="card-body">
+                  <h2 style="text-align: center;">{{ answer }}</h2>
+                  <h3 style="text-align: center;">{{ key.meeting }}</h3>
+                  <p style="text-align: center;">{{ key.meeting.meeting_date }}</p>
+                  <p style="text-align: center;">- User: {{ key.user }}</p>
+                  {% if form %}
+                    <form method="post" action="{% url 'customers:key_valid' %}" style="text-align: center;">
+                      {% csrf_token %}                    
+                      {% bootstrap_form form %}
+                      <input type="hidden" name="next" value="{{ next }}">
+                      {% bootstrap_button button_type="submit" content="Проверить Ключ" %}
+                    </form>          
+                  {% endif %}   
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}

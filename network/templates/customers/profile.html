@@ -8,12 +8,17 @@
     <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-family: 'Naston'; color: white;">
         Ваши Нетвокринг Встречи
     </h1> 
-
         <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-4">
             {% for meeting in page_obj %}
             <div class="col">
               <div class="card h-100" style="background-color: #DEDEDE; font-family: 'Naston', sans-serif; border-radius: 20px;">
                 <div class="card-body d-flex flex-column">
+                  <p class="card-text" style="text-align: center;"><small class="text-body-secondary">@Ключ Приглашения: </small><u>{{ meeting.key }}</u></p> 
+                  {% load qr_code %}
+                  <center>
+                    {{ meeting.link }}
+                    {% qr_from_text meeting.link size="M" %}
+                  </center>
                   <p class="card-text"><small class="text-body-secondary">@{{ meeting.meeting.author }}</small></p> 
                   <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.meeting.title }}</h2>
                   {% if meeting.meeting.topic %}   
