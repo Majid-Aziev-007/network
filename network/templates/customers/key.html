@@ -11,6 +11,9 @@
             <div class="card" style="font-family: 'Naston', sans-serif;">
               <div class="card-body">
                   <h2 style="text-align: center;">{{ answer }}</h2>
+                  <h3 style="text-align: center;">{{ key.meeting }}</h3>
+                  <p style="text-align: center;">{{ key.meeting.meeting_date }}</p>
+                  <p style="text-align: center;">- User: {{ key.user }}</p>
                   {% if form %}
                     <form method="post" action="{% url 'customers:key_valid' %}" style="text-align: center;">
                       {% csrf_token %}                    

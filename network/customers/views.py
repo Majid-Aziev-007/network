@@ -29,6 +29,7 @@ def key_valid(request, key_input = None):
         if key:
             context = {
                 'answer': 'Ключ Действителен',
+                'key': key
             }
                 
         else:
@@ -50,12 +51,14 @@ def key_valid(request, key_input = None):
                     context = {
                         'form': form,
                         'answer': 'Ключ Действителен',
+                        'key': key
                     }
                 
                 else:
                     context = {
                         'form': form,
                         'answer': 'Ключ Не Действителен',
+                        'key': key
                     }
 
                 return render(request, 'customers/key.html', context)          
