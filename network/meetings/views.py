@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from .forms import MeetingForm
+from customers.models import Key
+import random
 
 User = get_user_model()
 
@@ -87,9 +89,16 @@ def meeting_presence(request, meeting_id):
 
     meeting = get_object_or_404(Meeting, pk=meeting_id)
 
+    key = str(random.randint(1000000000000000000000, 9999999999999999999999))
+    link = "https://network-place.ru/profile/key-valid/" + key
+
+    Key.objects.get_or_create(key=key, link=link, user=request.user, meeting=meeting)
+
+    print(Key)
+
     Presence.objects.get_or_create(user=request.user, meeting=meeting)
 
-    return redirect('meetings:meeting_detail', meeting_id)
+    return redirect('customers:profile')
 
 @login_required
 def meeting_not_presence(request, meeting_id):
@@ -98,5 +107,6 @@ def meeting_not_presence(request, meeting_id):
     meeting = get_object_or_404(Meeting, pk=meeting_id)
 
     get_object_or_404(Presence, user=user, meeting=meeting).delete()
+    Key.objects.all().filter(user=user, meeting=meeting).delete()
 
-    return redirect('meetings:meeting_detail', meeting_id)
+    return redirect('customers:profile')
