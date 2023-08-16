@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="col">
+
     <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-family: 'Naston'; color: white;">
         Ваши Нетвокринг Встречи
     </h1> 
@@ -16,7 +17,6 @@
                   <p class="card-text" style="text-align: center;"><small class="text-body-secondary">@Ключ Приглашения: </small><u>{{ meeting.key }}</u></p> 
                   {% load qr_code %}
                   <center>
-                    {{ meeting.link }}
                     {% qr_from_text meeting.link size="M" %}
                   </center>
                   <p class="card-text"><small class="text-body-secondary">@{{ meeting.meeting.author }}</small></p> 
@@ -34,5 +34,6 @@
             {% endfor %} 
       
           </div>
+          <a href="{% url 'users:logout' %}" style="font-weight: bold; color: white; font-family: 'Naston'; float: right; margin-top: 30px;"><i class="fa fa-times" aria-hidden="true"></i> Выйти</a>
 
 {% endblock %}

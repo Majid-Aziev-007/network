@@ -6,9 +6,6 @@
       </li>
     {% if request.user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:logout' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Выйти</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'customers:profile' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Профиль</a>
       </li>
       {% if request.user.get_group_permissions %}
