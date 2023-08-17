@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'qr_code',
+    'subscription.apps.SubscriptionConfig',
     'customers.apps.CustomersConfig',
     'users.apps.UsersConfig',
     'meetings.apps.MeetingsConfig',
