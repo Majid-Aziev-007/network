@@ -9,12 +9,22 @@ NetWork - Место Встречи
             <h1>Покупка Подписки</h1>
             <h1>1500 RUB</h1>
             {% if base_url %}
-                <h1 style="margin: 30px;"><a href="{{ base_url }}" target="_blank" rel="noopener noreferrer">ССЫЛКА НА ОПЛАТУ</a></h1>
+                    <h3>
+                        <a href="{{ base_url }}" style="font-size: 2rem; margin: 15px;" class="btn btn-lg btn-white" target="_blank" rel="noopener noreferrer">
+                        ССЫЛКА НА ОПЛАТУ
+                        </a>
+                    </h3>
             {% endif %}
             {% if status == False %}
                 <p>Оплаты Нет</p>
             {% endif %}
-            <a href="{% url 'subscription:buy_check' %}" class="btn btn-lg btn-block btn-white" style="width: 30%; text-align: center;">Проверить Оплату</a>
+            <div style="margin-bottom: 100px;">
+                <i class="fa fa-cc-visa fa-3x" aria-hidden="true"></i>
+                <i class="fa fa-cc-mastercard fa-3x" aria-hidden="true"></i>
+                <i class="fa fa-credit-card fa-3x" aria-hidden="true"></i>
+                <i class="fa fa-cc-paypal fa-3x" aria-hidden="true"></i>
+            </div>
+            <a href="{% url 'subscription:buy_check' %}" class="btn btn-lg btn-block btn-white" style="width: 60%; text-align: center;">Проверить Оплату</a>
         </div>
     </center>
 {% endblock %}

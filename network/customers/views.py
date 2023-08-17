@@ -8,6 +8,9 @@ from datetime import timedelta
 
 @login_required
 def profile(request):
+    """
+        Профайл юзера
+    """
 
     if Subscribe.objects.filter(user=request.user):
         sub = Subscribe.objects.get(user=request.user)
@@ -36,23 +39,32 @@ def profile(request):
 
 @login_required
 def key_valid(request, key_input = None):
-    if key_input:
-        key = Key.objects.filter(key=key_input).first()
+    """
+        Проверка Ключа пользователя к Нетворкингу
+        key_input - Ввод ключа
+    """
 
-        if key:
-            context = {
-                'answer': 'Ключ Действителен',
-                'key': key
-            }
-                
-        else:
-            context = {
-                'answer': 'Ключ Не Действителен',
-            }
-
-        return render(request, 'customers/key.html', context)  
-    
     if request.user.get_group_permissions():
+
+        # Если key_input передан
+        if key_input:
+            # Находим ключ
+            key = Key.objects.filter(key=key_input).first()
+
+            # Проверка существования ключа
+            if key:
+                context = {
+                    'answer': 'Ключ Действителен',
+                    'key': key
+                }
+                    
+            else:
+                context = {
+                    'answer': 'Ключ Не Действителен',
+                }
+
+            return render(request, 'customers/key.html', context)  
+    
         form = KeyForm(request.POST)
         if request.method=='POST':
             if form.is_valid():

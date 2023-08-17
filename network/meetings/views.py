@@ -116,13 +116,13 @@ def meeting_presence(request, meeting_id):
         date_start = Subscribe.objects.filter(user=request.user)[0].date_start
 
         # Дата Конца подписки
-        date_finish = date_start + datetime.timedelta(days=32).timestamp()
+        date_finish = date_start + datetime.timedelta(days=32)
 
         # Сегодняшняя Дата
-        today_date = datetime.datetime.today().timestamp()
+        today_date = datetime.datetime.today()
 
         # Проверка срока годности подписки
-        if date_finish < today_date:
+        if date_finish.timestamp() < today_date.timestamp():
             Subscribe.objects.all().filter(user=request.user).delete()
             return redirect('customers:profile')
 
