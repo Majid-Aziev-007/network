@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+NetWork - Место Встречи
+{% endblock %} 
+
+{% block content %}
+    <center>
+        <div style="color: white; font-family: 'Naston';">
+            <h1>Покупка Подписки</h1>
+            <h1>1500 RUB</h1>
+            {% if base_url %}
+                <h1 style="margin: 30px;"><a href="{{ base_url }}" target="_blank" rel="noopener noreferrer">ССЫЛКА НА ОПЛАТУ</a></h1>
+            {% endif %}
+            {{ status }}
+            <a href="{% url 'subscription:buy_check' %}" class="btn btn-lg btn-block btn-white" style="width: 30%; text-align: center;">Проверить Оплату</a>
+        </div>
+    </center>
+{% endblock %}

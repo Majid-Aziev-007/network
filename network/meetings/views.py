@@ -5,7 +5,9 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from .forms import MeetingForm
 from customers.models import Key
+from subscription.models import Subscribe
 import random
+import datetime
 
 User = get_user_model()
 
@@ -87,18 +89,25 @@ def meeting_create(request):
 @login_required
 def meeting_presence(request, meeting_id):
 
-    meeting = get_object_or_404(Meeting, pk=meeting_id)
+    if Subscribe.objects.filter(user=request.user):
+        date_start = Subscribe.objects.filter(user=request.user)[0].date_start
+        if (date_start + datetime.timedelta(days=32)).timestamp() < datetime.datetime.today().timestamp():
+            Subscribe.objects.all().filter(user=request.user).delete()
+            return redirect('customers:profile')
 
-    key = str(random.randint(1000000000000000000000, 9999999999999999999999))
-    link = "https://network-place.ru/profile/key-valid/" + key
+        meeting = get_object_or_404(Meeting, pk=meeting_id)
 
-    Key.objects.get_or_create(key=key, link=link, user=request.user, meeting=meeting)
+        key = str(random.randint(1000000000000000000000, 9999999999999999999999))
+        link = "https://network-place.ru/profile/key-valid/" + key
 
-    print(Key)
+        Key.objects.get_or_create(key=key, link=link, user=request.user, meeting=meeting)
 
-    Presence.objects.get_or_create(user=request.user, meeting=meeting)
+        Presence.objects.get_or_create(user=request.user, meeting=meeting)
 
-    return redirect('customers:profile')
+        return redirect('customers:profile')
+    
+    else:
+        return redirect('subscription:page_buy')
 
 @login_required
 def meeting_not_presence(request, meeting_id):
