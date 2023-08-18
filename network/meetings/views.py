@@ -60,14 +60,25 @@ def meeting_detail(request, meeting_id):
     # Получение числа присутствующих
     presence_quantity = Presence.objects.filter(meeting=meeting).all().count()
 
-    # Проверка присутствия пользователя
+    # Проверка аутификации пользователя
     if request.user.is_authenticated:
+
+        # Проверяем Наличие подписки
+        if (not Subscribe.objects.filter(user=request.user)) and (meeting.type == "ON"):
+            meeting.address = "*************"
+
+        # Находим присутсвие его в нетворкингах
         presence = Presence.objects.filter(
             user=User.objects.get(username=request.user.username),
             meeting=meeting
         ).exists()
+
     else:
         presence = None
+
+        # Проверка, что Нетворк онлайн
+        if meeting.type == "ON":
+            meeting.address = "*************"
 
     context = {
         'meeting': meeting,

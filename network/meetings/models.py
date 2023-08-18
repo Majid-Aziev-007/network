@@ -5,6 +5,8 @@ User = get_user_model()
 
 
 class Topic(models.Model):
+    """Тематика Нетворкинга"""
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -14,6 +16,8 @@ class Topic(models.Model):
 
 
 class Meeting(models.Model):
+    """Нетворк"""
+
     CHOICES = (
         ('OFF', 'Offline'),
         ('ON', 'Online'),
