@@ -4,6 +4,9 @@ from .models import Subscribe
 from yoomoney import Quickpay, Client
 from datetime import date
 
+# Цена Подписки
+subscription_price = 2
+
 def payurl(sum, label):
     """
         Функция создание ссылки для оплаты
@@ -27,11 +30,16 @@ def payurl(sum, label):
 def page_buy(request):
     """Страница Оплаты Подписки"""
 
+    # Создание label для оплаты подписки
+    label_str = str(f'{request.user}{date.today()}subscription')
+
     # Создание ссылки для оплаты
-    url_pay = payurl(2, str(f'{request.user}{date.today()}'))
+    url_pay = payurl(subscription_price, label_str)
 
     context = {
-        'base_url': url_pay
+        'base_url': url_pay,
+        'sb_price': subscription_price,
+        'product': 'Подписка на 1 месяц'
     }
 
     return render(request, 'subscription/page_buy.html', context)
@@ -40,12 +48,16 @@ def page_buy(request):
 def buy_check(request):
     """Проверка Оплаты"""
 
+    # Создание label для оплаты подписки
+    label_str = str(f'{request.user}{date.today()}subscription')
+
+    # Статус оплаты не завершен
     status = False
 
     # Подключение к PAY и проверки истории операций
     token = "4100118181285588.94A5D725FBD7058D703D55DEEA220ECBCCBB409846616298B7B09E8EA495BDCA7688A9EA11AEA351708FA57D54F854427C474264C4B373F9BDB27257D490CE67CAA17526DCC83EE9B019A46EB2DABA233C9C4264BC3F76362C4AC070994381964D28F70E648E4A9A5301EEBB98CA0AED3D8E53CA61AD02B203BEAFEEFE1A25C1"
     client = Client(token)
-    history = client.operation_history(label=str(f'{request.user}{date.today()}'))
+    history = client.operation_history(label=label_str)
 
     # Получение status
     for operation in history.operations:
@@ -58,11 +70,13 @@ def buy_check(request):
         return redirect('customers:profile')
 
     # Получение url для повторной оплаты
-    url_pay = payurl(2, str(f'{request.user}{date.today()}'))
+    url_pay = payurl(subscription_price, label_str)
 
     context = {
         'base_url': url_pay,
-        'status': status
+        'status': status,
+        'sb_price': subscription_price,
+        'product': 'Подписка на 1 месяц'
     }
 
     return render(request, 'subscription/page_buy.html', context)
