@@ -8,6 +8,9 @@ from customers.models import Key
 from subscription.models import Subscribe
 import random
 import datetime
+from datetime import date
+from subscription.views import payurl
+from yoomoney import Client
 
 User = get_user_model()
 
@@ -57,6 +60,9 @@ def meeting_detail(request, meeting_id):
     # Получение нетворкинга детальнее
     meeting = get_object_or_404(Meeting, pk=meeting_id)
 
+    # Получение цены нетворкинга
+    price_meeting = f'{meeting.price} RUB'
+
     # Получение числа присутствующих
     presence_quantity = Presence.objects.filter(meeting=meeting).all().count()
 
@@ -64,7 +70,7 @@ def meeting_detail(request, meeting_id):
     if request.user.is_authenticated:
 
         # Проверяем Наличие подписки
-        if (not Subscribe.objects.filter(user=request.user)) and (meeting.type == "ON"):
+        if (not Subscribe.objects.filter(user=request.user)) and (meeting.type == "ON") and (not Presence.objects.filter(user=request.user, meeting=meeting)):
             meeting.address = "*************"
 
         # Находим присутсвие его в нетворкингах
@@ -73,6 +79,9 @@ def meeting_detail(request, meeting_id):
             meeting=meeting
         ).exists()
 
+        if presence:
+            price_meeting = "Уже Куплен"
+
     else:
         presence = None
 
@@ -80,10 +89,12 @@ def meeting_detail(request, meeting_id):
         if meeting.type == "ON":
             meeting.address = "*************"
 
+
     context = {
         'meeting': meeting,
+        'price_meeting': price_meeting,
         'presence': presence,
-        'presence_quantity': presence_quantity
+        'presence_quantity': presence_quantity,
     }
 
     return render(request, 'meetings/meeting_detail.html', context)
@@ -163,16 +174,93 @@ def meeting_not_presence(request, meeting_id):
         meeting_id - ID Нетворкинга
     """
 
-    # Получение Юзера
-    user = get_object_or_404(User, username=request.user.username)
+    # Проверка Подписки у пользователя
+    if Subscribe.objects.filter(user=request.user):
+        # Получение Юзера
+        user = get_object_or_404(User, username=request.user.username)
 
-    # Получение Нетворкинга
+        # Получение Нетворкинга
+        meeting = get_object_or_404(Meeting, pk=meeting_id)
+
+        # Удаление Присутствия
+        get_object_or_404(Presence, user=user, meeting=meeting).delete()
+
+        # Удаление Ключа
+        Key.objects.all().filter(user=user, meeting=meeting).delete()
+
+        return redirect('customers:profile')
+
+    else:
+        return redirect('subscription:page_buy')
+
+@login_required
+def page_buy(request, meeting_id):
+    """Страница Оплаты Нетворкинга"""
+
+    # Получение нетворкинга
     meeting = get_object_or_404(Meeting, pk=meeting_id)
 
-    # Удаление Присутствия
-    get_object_or_404(Presence, user=user, meeting=meeting).delete()
+    # Создание label для оплаты подписки
+    label_str = str(f'{request.user}{date.today()}{meeting.id}')
 
-    # Удаление Ключа
-    Key.objects.all().filter(user=user, meeting=meeting).delete()
+    # Создание ссылки для оплаты
+    url_pay = payurl(meeting.price, label_str)
 
-    return redirect('customers:profile')
+    context = {
+        'base_url': url_pay,
+        'sb_price': meeting.price,
+        'product': meeting.title,
+        'meeting': meeting,
+        'meeting_id': meeting.id
+    }
+
+    return render(request, 'meetings/page_buy.html', context)
+
+@login_required
+def buy_check(request, meeting_id):
+    """Проверка Оплаты"""
+
+    # Получение нетворкинга
+    meeting = get_object_or_404(Meeting, pk=meeting_id)
+
+    # Создание label для оплаты нетворкинга
+    label_str = str(f'{request.user}{date.today()}{meeting.id}')
+
+    # Статус оплаты не завершен
+    status = False
+
+    # Подключение к PAY и проверки истории операций
+    token = "4100118181285588.94A5D725FBD7058D703D55DEEA220ECBCCBB409846616298B7B09E8EA495BDCA7688A9EA11AEA351708FA57D54F854427C474264C4B373F9BDB27257D490CE67CAA17526DCC83EE9B019A46EB2DABA233C9C4264BC3F76362C4AC070994381964D28F70E648E4A9A5301EEBB98CA0AED3D8E53CA61AD02B203BEAFEEFE1A25C1"
+    client = Client(token)
+    history = client.operation_history(label=label_str)
+
+    # Получение status
+    for operation in history.operations:
+        status = operation.status
+
+    # Проверить status на получение оплаты
+    if status:
+        # Генерация Ключа
+        key = str(random.randint(1000000000000000000000, 9999999999999999999999))
+        link = "https://network-place.ru/profile/key-valid/" + key
+
+        # Создание Ключа
+        Key.objects.get_or_create(key=key, link=link, user=request.user, meeting=meeting)
+
+        # Создание Присутствия
+        Presence.objects.get_or_create(user=request.user, meeting=meeting)
+
+        return redirect('customers:profile')
+
+    # Получение url для повторной оплаты
+    url_pay = payurl(meeting.price, label_str)
+
+    context = {
+        'base_url': url_pay,
+        'status': status,
+        'sb_price': meeting.price,
+        'product': meeting.title,
+        'meeting_id': meeting.id
+    }
+
+    return render(request, 'meetings/page_buy.html', context)

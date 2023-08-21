@@ -158,18 +158,22 @@ h5,
                 </div>
                 <div class="row m-0">
                     <div class="col-10 ps-30 pe-0 my-4">
-                        <p class="text-muted">Подписка</p>
-                        <p class="h5">1<span class="ps-1">Месяц</span></p>
+                        <p class="text-muted">Тематика</p>
+                        <p class="h5">{{ meeting.topic }}</p>
                         <hr>
                     </div>
                     <div class="col-10 ps-30 my-4">
-                        <p class="text-muted">Качество</p>
-                        <p class="h5 m-0">Лучшие спикеры</p>
+                        <p class="text-muted">Дата</p>
+                        <p class="h5 m-0">{{ meeting.meeting_date }}</p>
                         <hr>
                     </div>
                     <div class="col-10 ps-30 my-4">
-                        <p class="text-muted">Нетворкинги</p>
-                        <p class="h5 m-0">Онлайн и Оффлайн</p>
+                        <p class="text-muted">Адрес</p>
+                        {% if meeting.type == "ON" %}
+                            <p class="h5 m-0">Онлайн Нетворкинг</p>
+                        {% else %}
+                            <p class="h5 m-0">{{ meeting.address }}</p>
+                        {% endif %}
                         <hr>
                     </div>
                 </div>
@@ -251,7 +255,7 @@ h5,
         </div>
     </div>
     <div class="btn btn-lg btn-block" style="margin-top: 20px; background-color: black; border-radius: 0px;">
-        <a href="{% url 'subscription:buy_check' %}" style="text-align: center; color: white;">
+        <a href="{% url 'meetings:buy_check' meeting_id %}" style="text-align: center; color: white;">
             Проверить Оплату
         </a>
     </div>

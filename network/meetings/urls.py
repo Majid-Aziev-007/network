@@ -19,4 +19,6 @@ urlpatterns = [
         views.meeting_not_presence,
         name='meeting_not_presence'
     ),
+    path('page-buy/<int:meeting_id>/', views.page_buy, name='page_buy'),
+    path('buy-check/<int:meeting_id>/', views.buy_check, name='buy_check'),
 ]
