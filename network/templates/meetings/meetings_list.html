@@ -9,6 +9,27 @@ NetWork - {{ topic }}
 
 {% include 'meetings/includes/navbar_topic.html' %} 
 
+  {% include 'meetings/includes/search.html' %} 
+
+  <div class="container">
+
+    <div class="row d-flex justify-content-center align-items-center animstart" style="margin-bottom: 50px;">
+
+      <div class="col-md-7">
+
+        <div class="search">
+            <form action="{% url 'meetings:topic_list' topic.slug %}">
+                <i class="fa fa-search"></i>
+                <input type="text" class="form-control" placeholder="{% if not search %} Искать Город {% endif %}{{search}}" autocomplete="on" name="search">
+                <button class="btn btn-primary">Поиск</button>
+            </form>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+
 <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-4 animstart">
   {% for meeting in page_obj %}
   <div class="col">

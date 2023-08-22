@@ -14,15 +14,22 @@ User = get_user_model()
 def index(request):
     """Главная Страница"""
 
-    # Список нетворкингов
-    meeting_list = Meeting.objects.all().order_by('-pub_date')
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+        meeting_list = Meeting.objects.filter(address__icontains=search_query).order_by('-pub_date')
+
+    else:
+        # Список нетворкингов
+        meeting_list = Meeting.objects.all().order_by('-pub_date')
 
     paginator = Paginator(meeting_list, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'search_query': search_query
     }
 
     return render(request, 'meetings/index.html', context)
@@ -33,9 +40,16 @@ def topic_meetings(request, slug):
         slug - Слаг топика
     """
 
+    search_query = request.GET.get('search', '')
+
     # Получение нетворкингов по определенной теме
     topic = get_object_or_404(Topic, slug=slug)
-    meeting_list = Meeting.objects.filter(topic=topic).order_by('-pub_date')[:10]
+
+    if search_query:
+        meeting_list = Meeting.objects.filter(topic=topic, address__icontains=search_query).order_by('-pub_date')
+
+    else:
+        meeting_list = Meeting.objects.filter(topic=topic).order_by('-pub_date')
 
     paginator = Paginator(meeting_list, 6)
     page_number = request.GET.get('page')
