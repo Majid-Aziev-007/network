@@ -6,16 +6,6 @@
 
 <div class="col">
 
-    <center>
-      <div class="btn btn-lg btn-block btn-white" style="font-family: 'Naston'; sans-serif; text-align: center; background-color: white; border-radius: 20px; margin: 30px; width: 60%;">
-        {% if sub %} 
-          <h3>Подписка действует - {{ request.user }} до {{ date_finish|date:"d E Y" }}</h3>
-        {% else %}
-            <a href="{% url 'subscription:page_buy' %}" class="btn btn-lg btn-block btn-white">Приобрести подписку</a>
-          </center>
-        {% endif %}
-    </center>
-
     <h2 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-family: 'Naston'; color: white;">
         Ваши Нетвокринг Встречи
     </h2> 

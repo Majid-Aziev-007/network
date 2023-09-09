@@ -5,14 +5,30 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from .forms import MeetingForm
 from customers.models import Key
-from subscription.models import Subscribe
 import random
-import datetime
 from datetime import date
-from subscription.views import payurl
-from yoomoney import Client
+from yoomoney import Quickpay, Client
 
 User = get_user_model()
+
+def payurl(sum, label):
+    """
+        Функция создание ссылки для оплаты
+        sum - Сумма Платежа
+        label - Лейбл к платежу для его уникальности
+    """
+
+    # Создаём ссылку с оплатой
+    quickpay = Quickpay(
+                receiver="4100118181285588",
+                quickpay_form="shop",
+                targets="Sponsor this project",
+                paymentType="SB",
+                sum=sum,
+                label=label)
+
+    # Отдаём ссылку с оплатой
+    return quickpay.base_url
 
 def index(request):
     """Главная Страница"""
@@ -83,9 +99,10 @@ def meeting_detail(request, meeting_id):
     # Проверка аутификации пользователя
     if request.user.is_authenticated:
 
-        # Проверяем Наличие подписки
-        if (not Subscribe.objects.filter(user=request.user)) and (meeting.type == "ON") and (not Presence.objects.filter(user=request.user, meeting=meeting)):
-            meeting.address = "*************"
+        if not Presence.objects.filter(user=request.user, meeting=meeting):
+            # Проверка, что Нетворк онлайн
+            if meeting.type == "ON":
+                meeting.address = "*************"
 
         # Находим присутсвие его в нетворкингах
         presence = Presence.objects.filter(
@@ -138,74 +155,6 @@ def meeting_create(request):
         return render(request, 'meetings/create_meeting.html', context)
 
     return render(request, 'meetings/index.html', context)
-
-@login_required
-def meeting_presence(request, meeting_id):
-    """
-        Отправить участие в нетворкинге
-        meeting_id - ID Нетворкинга
-    """
-
-    # Проверка Подписки у пользователя
-    if Subscribe.objects.filter(user=request.user):
-        # Дата Начала подписки
-        date_start = Subscribe.objects.filter(user=request.user)[0].date_start
-
-        # Дата Конца подписки
-        date_finish = date_start + datetime.timedelta(days=32)
-
-        # Сегодняшняя Дата
-        today_date = datetime.datetime.today()
-
-        # Проверка срока годности подписки
-        if date_finish.timestamp() < today_date.timestamp():
-            Subscribe.objects.all().filter(user=request.user).delete()
-            return redirect('customers:profile')
-
-        # Получение Нетворкинга
-        meeting = get_object_or_404(Meeting, pk=meeting_id)
-
-        # Генерация Ключа
-        key = str(random.randint(1000000000000000000000, 9999999999999999999999))
-        link = "https://network-place.ru/profile/key-valid/" + key
-
-        # Создание Ключа
-        Key.objects.get_or_create(key=key, link=link, user=request.user, meeting=meeting)
-
-        # Создание Присутствия
-        Presence.objects.get_or_create(user=request.user, meeting=meeting)
-
-        return redirect('customers:profile')
-    
-    else:
-
-        return redirect('subscription:page_buy')
-
-@login_required
-def meeting_not_presence(request, meeting_id):
-    """
-        Отправить отсутствие в нетворкинге
-        meeting_id - ID Нетворкинга
-    """
-
-    # Проверка Подписки у пользователя
-    if Subscribe.objects.filter(user=request.user):
-        # Получение Юзера
-        user = get_object_or_404(User, username=request.user.username)
-
-        # Получение Нетворкинга
-        meeting = get_object_or_404(Meeting, pk=meeting_id)
-
-        # Удаление Присутствия
-        get_object_or_404(Presence, user=user, meeting=meeting).delete()
-
-        # Удаление Ключа
-        Key.objects.all().filter(user=user, meeting=meeting).delete()
-
-        return redirect('customers:profile')
-
-    else:
-        return redirect('subscription:page_buy')
 
 @login_required
 def page_buy(request, meeting_id):

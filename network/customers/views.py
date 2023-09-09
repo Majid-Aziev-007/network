@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from subscription.models import Subscribe
 from .models import Key
 from .forms import KeyForm
 from datetime import timedelta
@@ -12,15 +11,6 @@ def profile(request):
         Профайл юзера
     """
 
-    if Subscribe.objects.filter(user=request.user):
-        sub = Subscribe.objects.get(user=request.user)
-        date_start = sub.date_start
-        date_finish = date_start + timedelta(days=32)
-
-    else:
-        sub = None
-        date_finish = None
-
     keys = Key.objects.filter(user=request.user)
 
     paginator = Paginator(keys, 6)
@@ -30,8 +20,6 @@ def profile(request):
     context = {
         'page_obj': page_obj,
         'link': 'https://network-place.ru/profile/key-valid/',
-        'sub': sub,
-        'date_finish': date_finish,
     }
 
     return render(request, 'customers/profile.html', context)

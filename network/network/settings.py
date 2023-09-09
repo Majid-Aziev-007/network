@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7vsp%ki84wn!!ovcv3k2f$ics21&cr&m(1_m5i1$pdxl$m4e!_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'qr_code',
-    'subscription.apps.SubscriptionConfig',
     'customers.apps.CustomersConfig',
     'users.apps.UsersConfig',
     'meetings.apps.MeetingsConfig',
