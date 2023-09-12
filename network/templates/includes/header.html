@@ -2,18 +2,26 @@
 <ul class="nav nav-pills nav-fill" style="margin: 30px; font-family: 'LT Streetway Neue', sans-serif;">
   {% with request.resolver_match.view_name as view_name %}  
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'meetings:index' %}" style="background-color: black; color: white;">Главная</a>
+        <a class="nav-link" aria-current="page" href="{% url 'meetings:index' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Главная</a>
       </li>
     {% if request.user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:logout' %}" style="background-color: black; color: white;">Выйти</a>
+        <a class="nav-link" aria-current="page" href="{% url 'customers:profile' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Профиль</a>
       </li>
+      {% if request.user.get_group_permissions %}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'meetings:meeting_create' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Создать Нетворк</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'customers:key_valid' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Проверить Ключ</a>
+        </li>
+      {% endif %}
     {% else %}
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:login' %}" style="background-color: black; color: white;">Войти</a>
+        <a class="nav-link" aria-current="page" href="{% url 'users:login' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Войти</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:signup' %}" style="background-color: black; color: white;">Регистрация</a>
+        <a class="nav-link" aria-current="page" href="{% url 'users:signup' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Регистрация</a>
       </li>
     {% endif %}
   {% endwith %}

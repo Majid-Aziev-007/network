@@ -5,6 +5,8 @@ User = get_user_model()
 
 
 class Topic(models.Model):
+    """Тематика Нетворкинга"""
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -14,8 +16,22 @@ class Topic(models.Model):
 
 
 class Meeting(models.Model):
+    """Нетворк"""
+
+    CHOICES = (
+        ('OFF', 'Offline'),
+        ('ON', 'Online'),
+    )
+
+    type = models.CharField(
+        max_length=300,
+        choices=CHOICES,
+        blank=True,
+        null=True
+    )
     title = models.CharField(max_length=200)
     description = models.TextField()
+    price = models.IntegerField()
     meeting_date = models.DateTimeField(
         blank=True,
         null=True,
@@ -37,3 +53,18 @@ class Meeting(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Presence(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='participant',
+        null=True
+    )
+
+    meeting = models.ForeignKey(
+        Meeting,
+        on_delete=models.CASCADE,
+        related_name='meeting'
+    )

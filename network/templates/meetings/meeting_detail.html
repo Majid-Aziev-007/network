@@ -1,21 +1,45 @@
 {% extends 'base.html' %}
 {% block title %}
-Пост {{ title_text }}
+NetWork - Место Встречи
 {% endblock %} 
 {% block content %}
-  <div class="col">
+
     <div class="card" style="background-color: #white; font-family: 'Naston', sans-serif; border-radius: 10px;">
       <div class="card-body d-flex flex-column">
-        <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h2>
-        {% if meeting.topic %}   
-          <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
-        {% endif %} 
-        <p class="card-text"><small class="text-body-secondary">Дата Встречи: {{ meeting.meeting_date }}</small></p>
-        <p class="card-text" style="margin-top: -20px;"><small class="text-body-secondary">Автор: @{{ meeting.author }}</small></p>
-    
-        <p class="card-text">{{ meeting.description|linebreaks }}</p>
-        <p class="card-text">Адрес: {{ meeting.address }}</p>
+        {% if meeting.type == "ON" %}   
+          <h2 class="card-title" style="font-weight: bold; text-align: center; margin-bottom: 15px;">ОНЛАЙН МЕРОПРИЯТИЕ</h2>
+        {% endif %}
+        
+        <div class="row">
+
+          <div class="col-lg-8">      
+            <p class="card-text">{{ meeting.description|linebreaks }}</p>
+          </div>
+
+          <div class="col-lg-4">
+                <h2 class="card-title" style="font-weight: bold;">{{ meeting.title }}</h2>
+                {% if meeting.topic %}   
+                  <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
+                {% endif %} 
+
+                {% if meeting.type == "ON" %}   
+                  <a href="{{ meeting.address }}" class="nav-link">Ссылка: {{ meeting.address }}</a>
+                {% else %}   
+                  <p class="card-text">Адрес: {{ meeting.address }}</p>
+                {% endif %}
+          
+                <p class="card-text"><small class="text-body-secondary">Дата Встречи: {{ meeting.meeting_date }}</small></p>
+                <p class="card-text" style="margin-top: -20px;"><small class="text-body-secondary">Автор: @{{ meeting.author }}</small></p>
+
+                <a
+                class="btn btn-lg btn-black shadow"
+                style="width: 100%;"
+                href="{% url 'meetings:page_buy' meeting.id %}" role="button">
+                  {{ price_meeting }}
+                </a> 
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
 {% endblock %}
