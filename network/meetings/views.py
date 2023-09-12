@@ -33,9 +33,12 @@ def payurl(sum, label):
 def index(request):
     """Главная Страница"""
 
+    # Запрос от Поиска
     search_query = request.GET.get('search', '')
 
+    # Проверяем был ли поиск
     if search_query:
+        # Если был поиск, фильтруем митинги по запросу
         meeting_list = Meeting.objects.filter(address__icontains=search_query).order_by('-pub_date')
 
     else:
