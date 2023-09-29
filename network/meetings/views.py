@@ -94,11 +94,16 @@ def meeting_detail(request, meeting_id):
     # Получение нетворкинга детальнее
     meeting = get_object_or_404(Meeting, pk=meeting_id)
     
+    # Получаем дату митинга
     meeting_date = int(meeting.meeting_date.strftime("%Y%m%d%H%M%S"))
+
+    # Получаем дату сейчас
     datetime_now = int(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
+    # Сравниваем дату митинга и сейчас
     if meeting_date < datetime_now:
 
+        # Мероприятие устарело, показываем это
         context = {
             'finish': True,
         }
