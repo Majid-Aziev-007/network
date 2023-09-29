@@ -8,6 +8,7 @@ from customers.models import Key
 import random
 from datetime import date
 from yoomoney import Quickpay, Client
+import datetime
 
 User = get_user_model()
 
@@ -39,11 +40,11 @@ def index(request):
     # Проверяем был ли поиск
     if search_query:
         # Если был поиск, фильтруем митинги по запросу
-        meeting_list = Meeting.objects.filter(address__icontains=search_query).order_by('-pub_date')
+        meeting_list = Meeting.objects.filter(address__icontains=search_query).order_by('-meeting_date')
 
     else:
         # Список нетворкингов
-        meeting_list = Meeting.objects.all().order_by('-pub_date')
+        meeting_list = Meeting.objects.all().order_by('-meeting_date')
 
     paginator = Paginator(meeting_list, 6)
     page_number = request.GET.get('page')
@@ -68,10 +69,10 @@ def topic_meetings(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
 
     if search_query:
-        meeting_list = Meeting.objects.filter(topic=topic, address__icontains=search_query).order_by('-pub_date')
+        meeting_list = Meeting.objects.filter(topic=topic, address__icontains=search_query).order_by('-meeting_date')
 
     else:
-        meeting_list = Meeting.objects.filter(topic=topic).order_by('-pub_date')
+        meeting_list = Meeting.objects.filter(topic=topic).order_by('-meeting_date')
 
     paginator = Paginator(meeting_list, 6)
     page_number = request.GET.get('page')
@@ -92,6 +93,17 @@ def meeting_detail(request, meeting_id):
 
     # Получение нетворкинга детальнее
     meeting = get_object_or_404(Meeting, pk=meeting_id)
+    
+    meeting_date = int(meeting.meeting_date.strftime("%Y%m%d%H%M%S"))
+    datetime_now = int(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+
+    if meeting_date < datetime_now:
+
+        context = {
+            'finish': True,
+        }
+
+        return render(request, 'meetings/meeting_detail.html', context)
 
     # Получение цены нетворкинга
     price_meeting = f'{meeting.price} RUB'
