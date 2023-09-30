@@ -68,3 +68,6 @@ class Presence(models.Model):
         on_delete=models.CASCADE,
         related_name='meeting'
     )
+
+    def __str__(self):
+        return self.meeting
