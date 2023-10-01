@@ -8,5 +8,6 @@ urlpatterns = [
     path('', include('meetings.urls', namespace='meetings')),
     path('profile/', include('customers.urls', namespace='customers')),
     path('auth/', include('users.urls')),
+    path('panel-creator/', include('panelcreator.urls', namespace='panelcreator')),
     path('admin/', admin.site.urls),
 ]
