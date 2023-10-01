@@ -9,6 +9,7 @@ import random
 from datetime import date
 from yoomoney import Quickpay, Client
 import datetime
+from panelcreator.models import Creator
 
 User = get_user_model()
 
@@ -156,7 +157,9 @@ def meeting_create(request):
         Создание Нетворка
     """
 
-    if request.user.get_group_permissions():
+    creator = Creator.objects.filter(user=request.user).exists()
+
+    if creator:
         form = MeetingForm(request.POST, files=request.FILES or None)
         if request.method == 'POST':
             if form.is_valid():

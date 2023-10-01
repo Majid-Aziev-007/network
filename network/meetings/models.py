@@ -50,6 +50,7 @@ class Meeting(models.Model):
         on_delete=models.CASCADE,
         related_name='topic'
     )
+    np_panel = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -59,8 +60,7 @@ class Presence(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='participant',
-        null=True
+        related_name='presence',
     )
 
     meeting = models.ForeignKey(
@@ -68,6 +68,3 @@ class Presence(models.Model):
         on_delete=models.CASCADE,
         related_name='meeting'
     )
-
-    def __str__(self):
-        return self.meeting
