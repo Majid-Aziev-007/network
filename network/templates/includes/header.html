@@ -1,32 +1,48 @@
 {% load static %}
-<ul class="nav nav-pills nav-fill" style="margin: 30px; font-family: 'LT Streetway Neue', sans-serif;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+    <a class="navbar-brand" href="#" style="color: #e80000; font-weight: bold;">NETWORK-PLACE.RU</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Найти.." aria-label="Search">
+        <button class="btn" style="background-color: #e80000; color: white;" type="submit">ПОИСК</button>
+      </form>
+    </div>
+</nav>
+
+<ul class="nav justify-content-center" style="background-color: #e80000; font-weight:500;">
   {% with request.resolver_match.view_name as view_name %}  
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'meetings:index' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Главная</a>
+        <a class="nav-link" aria-current="page" href="{% url 'meetings:index' %}" style="color: white;">Главная</a>
       </li>
     {% if request.user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'customers:profile' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Профиль</a>
+        <a class="nav-link" aria-current="page" href="{% url 'customers:profile' %}" style="color: white;">Профиль</a>
       </li>
       {% if request.user.get_group_permissions %}
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'meetings:meeting_create' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Создать Нетворк</a>
+          <a class="nav-link" aria-current="page" href="{% url 'meetings:meeting_create' %}" style="color: white;">Создать нетворк</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'customers:key_valid' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Проверить Ключ</a>
+          <a class="nav-link" aria-current="page" href="{% url 'customers:key_valid' %}" style="color: white;">Проверить ключ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'panelcreator:panel' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Панель Управления</a>
+          <a class="nav-link" aria-current="page" href="{% url 'panelcreator:panel' %}" style="color: white;">Панель правления</a>
         </li>
       {% endif %}
     {% else %}
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:login' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Войти</a>
+        <a class="nav-link" aria-current="page" href="{% url 'users:login' %}" style="color: white;">Войти</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:signup' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Регистрация</a>
+        <a class="nav-link" aria-current="page" href="{% url 'users:signup' %}" style="color: white;">Регистрация</a>
       </li>
     {% endif %}
   {% endwith %}
 </ul>
-<hr style="color: white">
