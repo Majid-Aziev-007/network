@@ -8,28 +8,6 @@ NetWork - Место Встречи
     <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-weight: 600;">
       Нетворкинг Встречи
     </h1> 
-    {% include 'meetings/includes/navbar_topic.html' %} 
-
-      {% include 'meetings/includes/search.html' %} 
-
-      <div class="container">
-
-        <div class="row d-flex justify-content-center align-items-center animstart" style="margin-bottom: 50px;">
-    
-          <div class="col-md-7">
-    
-            <div class="search">
-                <form action="{% url 'meetings:index' %}">
-                    <i style="color: #e80000" class="fa fa-search"></i>
-                    <input type="text" class="form-control" placeholder="{% if not search %} Искать Город {% endif %}{{search}}" autocomplete="on" name="search">
-                    <button class="btn" style="color: white;">Поиск</button>
-                </form>
-            </div>
-            
-          </div>
-          
-        </div>
-      </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-4">
       {% for meeting in page_obj %}
