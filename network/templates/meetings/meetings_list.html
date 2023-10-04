@@ -18,7 +18,7 @@ NetWork - {{ topic }}
         {% thumbnail meeting.image "1200x800" as im %}
           <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
         {% endthumbnail %}
-        <h5 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h5>
+        <h6 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h6>
         <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
       </div>
     </a>

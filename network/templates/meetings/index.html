@@ -6,9 +6,14 @@ NetWork - Место Встречи
 
 {% block content %}
   <section class="animstart" style="color: black;">
-    <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-weight: bold;">
-      НЕТВОРКИНГ ВСТРЕЧИ
-    </h1> 
+    <div class="row">
+      <div class="col">
+        <h2 style="margin-top: 40px; text-align: left; margin-bottom: 30px; font-weight: 800;">
+          <img src="https://i.ibb.co/09wqTRS/icons8-opened-folder-48-1.png" style="margin-bottom: 10px;">
+          Нетворкинг встречи
+        </h2> 
+      </div>
+    </div>
 
     <div class="row row-cols-2 row-cols-md-2 row-cols-xxl-4 g-4">
 
@@ -20,7 +25,7 @@ NetWork - Место Встречи
             {% thumbnail meeting.image "1200x800" as im %}
               <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
             {% endthumbnail %}
-            <h5 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h5>
+            <h6 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h6>
             <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
           </div>
         </a>
