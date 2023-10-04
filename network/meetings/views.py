@@ -47,7 +47,7 @@ def index(request):
         # Список нетворкингов
         meeting_list = Meeting.objects.all().order_by('-meeting_date')
 
-    paginator = Paginator(meeting_list, 6)
+    paginator = Paginator(meeting_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -75,7 +75,7 @@ def topic_meetings(request, slug):
     else:
         meeting_list = Meeting.objects.filter(topic=topic).order_by('-meeting_date')
 
-    paginator = Paginator(meeting_list, 6)
+    paginator = Paginator(meeting_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -160,7 +160,7 @@ def meeting_create(request):
     creator = Creator.objects.filter(user=request.user).exists()
 
     if creator:
-        form = MeetingForm(request.POST, files=request.FILES or None)
+        form = MeetingForm(request.POST, files=request.FILES)
         if request.method == 'POST':
             if form.is_valid():
                 post = form.save(commit=False)
