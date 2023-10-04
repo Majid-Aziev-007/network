@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,8 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'meetings:index'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_ROOT = '/home/c/cd80137/network/public_html/static'

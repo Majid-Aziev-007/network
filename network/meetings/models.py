@@ -31,6 +31,11 @@ class Meeting(models.Model):
     )
     title = models.CharField(max_length=200)
     description = models.TextField()
+    image = models.ImageField(
+        'Картинка',
+        upload_to='meetings/',
+        blank=True
+    )
     price = models.IntegerField()
     meeting_date = models.DateTimeField(
         blank=True,

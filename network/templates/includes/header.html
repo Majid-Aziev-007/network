@@ -17,44 +17,50 @@ window.yaContextCb.push(()=>{
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0">
-        <div class="row justify-content-center" style="margin-bottom: -20px">
-          {% with request.resolver_match.view_name as view_name %}  
-            <li class="nav-item col">
-              <a class="nav-link" style="text-align: center; color: black;" href="#">
-                <i class="fa fa-home fa-lg" aria-hidden="true"></i>
-                <p style="font-weight: 300;">Главная</p>        
-              </a>
-            </li>
-            {% if request.user.is_authenticated %}
-                <li class="nav-item col">
-                  <a class="nav-link" style="text-align: center; color: black;" href="#">
-                    <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
-                    <p style="font-weight: 300;">Профиль</p>        
-                  </a>
-                </li>
-                {% if request.user.get_group_permissions %}
+      <ul class="navbar-nav me-auto my-2 my-lg-0" style="margin-left: auto;">
+        <div class="row" style="margin-bottom: -20px;">
+            {% with request.resolver_match.view_name as view_name %}  
+              <li class="nav-item col">
+                <a class="nav-link" style="text-align: center; color: black;" href="{% url 'meetings:index' %}">
+                  <i class="fa-regular fa-map fa-lg" aria-hidden="true"></i>
+                  <p style="font-weight: 300; font-size:small;">Главная</p>        
+                </a>
+              </li>
+              {% if request.user.is_authenticated %}
                   <li class="nav-item col">
-                    <a class="nav-link" style="text-align: center; color: black;" href="#">
-                      <i class="fa fa-id-card fa-lg" aria-hidden="true"></i>
-                      <p style="font-weight: 300;">Панель</p>        
+                    <a class="nav-link" style="text-align: center; color: black;" href="{% url 'customers:profile' %}">
+                      <i class="fa-regular fa-user fa-lg" aria-hidden="true"></i>
+                      <p style="font-weight: 300; font-size:small;">Профиль</p>        
                     </a>
                   </li>
-                {% endif %}
-              {% else %}
-                <li class="nav-item col">
-                  <a class="nav-link" style="text-align: center; color: black;" href="#">
-                    <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
-                    <p style="font-weight: 300;">Войти</p>        
-                  </a>
-                </li>
-                <li class="nav-item col">
-                  <a class="nav-link" style="text-align: center; color: black;" href="#">
-                    <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
-                    <p style="font-weight: 300;">Регистрация</p>        
-                  </a>
-                </li>
-            {% endif %}
+                  {% if request.user.get_group_permissions %}
+                    <li class="nav-item col">
+                      <a class="nav-link" style="text-align: center; color: black;" href="{% url 'panelcreator:panel' %}">
+                        <i class="fa-regular fa-address-card fa-lg" aria-hidden="true"></i>
+                        <p style="font-weight: 300; font-size:small;">Панель</p>        
+                      </a>
+                    </li>
+                  {% endif %}
+                {% else %}
+                  <li class="nav-item col">
+                    <a class="nav-link" style="text-align: center; color: black;" href="{% url 'users:login' %}">
+                      <i class="fa-regular fa-user fa-lg"></i>
+                      <p style="font-weight: 300; font-size:small;">Войти</p>        
+                    </a>
+                  </li>
+                  <li class="nav-item col">
+                    <a class="nav-link" style="text-align: center; color: black;" href="{% url 'users:signup' %}">
+                      <i class="fa-regular fa-address-card fa-lg" aria-hidden="true"></i>
+                      <p style="font-weight: 300; font-size:small;">Регистрация</p>        
+                    </a>
+                  </li>
+              {% endif %}
+              <li class="nav-item col">
+                <a class="nav-link" style="text-align: center; color: black;" href="#">
+                  <i class="fa-regular fa-circle-question fa-lg" aria-hidden="true"></i>
+                  <p style="font-weight: 300; font-size:small;">Вопросы</p>        
+                </a>
+              </li>
           {% endwith %}
         </div>
       </ul>

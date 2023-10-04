@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block title %}
 NetWork - Панель Креатора
 {% endblock %} 
@@ -8,7 +9,7 @@ NetWork - Панель Креатора
 <div style="color: black;">
 
     <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-        <h1 style="font-weight: 600;">ПАНЕЛЬ УПРАВЛЕНИЯ</h1>
+        <h1 style="font-weight: 600; font-weight: bold;">ПАНЕЛЬ УПРАВЛЕНИЯ</h1>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3" style="margin-bottom: 30px;">
@@ -43,23 +44,23 @@ NetWork - Панель Креатора
     </div>
     <hr>
     <h2>Ваши мероприятия:</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3" style="margin-bottom: 30px;">
+    <div class="row row-cols-2 row-cols-md-2 row-cols-xxl-4 g-4" style="margin-bottom: 30px;">
             {% for meeting in meetings %}
+
             <div class="col">
-                <div class="card" style="background-color: #DEDEDE; margin-bottom: 10px;">
-                    <div class="card-body d-flex flex-column">
-                    <h3 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h3>
-                    {% if meeting.topic %}   
-                        <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
-                    {% endif %} 
-                    <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">{{ meeting.meeting_date }}</a>
-                    <p style="font-weight: bold;">Цена: {{ meeting.price }}RUB</p>
-                    <p style="font-weight: bold;">Участники: {{ meeting.np_panel }}</p>
-                    <a href="{% url 'meetings:meeting_detail' meeting.pk %}" class="align-self-end btn btn-lg btn-block btn-black" style="margin-top: auto;">Перейти</a>
-                    </div>
+              <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
+                <div>
+                  {% thumbnail meeting.image "1200x800" as im %}
+                    <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
+                  {% endthumbnail %}
+                  <h5 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h5>
+                  <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
+                  <p style="font-weight: bold;">Участники: {{ meeting.np_panel }}</p>
                 </div>
+              </a>
             </div>
-            {% endfor %}
+                
+            {% endfor %} 
     </div>
 
 </div>

@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block title %}
 NetWork - Место Встречи
 {% endblock %} 
 
 {% block content %}
   <section class="animstart" style="color: black;">
-    <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-weight: 600;">
-      Нетворкинг Встречи
+    <h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; font-weight: bold;">
+      НЕТВОРКИНГ ВСТРЕЧИ
     </h1> 
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-4">
+    <div class="row row-cols-2 row-cols-md-2 row-cols-xxl-4 g-4">
+
       {% for meeting in page_obj %}
+
       <div class="col">
-        <div class="card h-100" style="background-color: #white; border-radius: 20px;">
-          <div class="card-body d-flex flex-column">
-            <p class="card-text"><small class="text-body-secondary">@{{ meeting.author }}</small></p> 
-            <h2 class="card-title" style="font-weight: bold; margin-top: -10px;">{{ meeting.title }}</h2>
-            {% if meeting.topic %}   
-              <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
-            {% endif %} 
-            <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
-            <p class="card-text">{{ meeting.description|truncatechars:100 }}</p>
-            <a href="{% url 'meetings:meeting_detail' meeting.pk %}" class="align-self-end btn btn-lg btn-block" style="margin-top: auto; background-color: #e80000; color: white;">Перейти</a>
+        <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
+          <div>
+            {% thumbnail meeting.image "1200x800" as im %}
+              <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
+            {% endthumbnail %}
+            <h5 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h5>
+            <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
           </div>
-        </div>
+        </a>
       </div>
       
       {% endfor %} 
