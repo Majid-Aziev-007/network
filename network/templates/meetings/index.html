@@ -5,61 +5,105 @@ NetWork - Место Встречи
 {% endblock %} 
 
 {% block content %}
-  <section class="animstart" style="color: black;">
+
+{% if not request.user.is_authenticated %}
+
+<div style="background-color: #140023; color: #C77DFF; padding-top: 60px; padding-bottom: 60px;">
+
+  <div class="container">
+    <div class="row justify-content-center" style="text-align: center;">
+
+      <div class="col-12 col-md-8 col-xxl-5">
+        <h1 style="font-family: 'Monoton', cursive;">
+          NETWORK-PLACE
+        </h1>
+        <p>
+          Ваш парк развлечений мероприятий и вебинаров. 
+          Скользите в виртуальное пространство и отправляйтесь в незабываемое путешествие, 
+          исследуя новые идеи и знания!
+        </p>
+        <a href="{% url 'users:login' %}">
+          <button type="button" class="btn" style="background-color: #C77DFF; color: white;">Войти</button>
+        </a>
+
+        <a href="{% url 'users:signup' %}">
+          <button type="button" class="btn" style="background-color: #C77DFF; color: white;">Регистрация</button>
+        </a>
+        </div>
+    
+    </div>
+  </div>
+
+</div>
+
+{% endif %}
+
+<div class="container">
+  <section style="color: #140023;">
+  
     <div class="row">
       <div class="col">
-        <h2 style="margin-top: 40px; text-align: left; margin-bottom: 30px; font-weight: 800;">
-          <img src="https://i.ibb.co/09wqTRS/icons8-opened-folder-48-1.png" style="margin-bottom: 10px;">
-          Нетворкинг встречи
+        <h2 style="margin-top: 60px; text-align: left; margin-bottom: 30px; font-weight: 800;">
+          ВСТРЕЧИ
         </h2> 
       </div>
     </div>
 
-    <div class="row row-cols-2 row-cols-md-2 row-cols-xxl-4 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-4 g-4">
 
       {% for meeting in page_obj %}
 
       <div class="col">
-        <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
-          <div>
-            {% thumbnail meeting.image "1200x800" as im %}
-              <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
-            {% endthumbnail %}
-            <h6 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h6>
-            <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
+        <div class="card h-100 ivent-body">
+          <div class="card-body">
+              <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
+              <h6 class="card-title" style="font-weight: 600; color: #140023; margin: 10px;">{{ meeting.title }}</h6>
+              </a>
           </div>
-        </a>
+          <center>
+            {% thumbnail meeting.image "1200x800" as im %}
+              <img class="card-img-bottom" src="{{ im.url }}" style="border-radius: 10px; width: 80%; margin-bottom: 15px;">
+            {% endthumbnail %}
+          </center>
+          <div class="card-footer">
+            <a class="nav-link" style="font-weight: 300;">{{ meeting.meeting_date }}</a>
+          </div>
+        </div>
       </div>
       
-      {% endfor %} 
+      {% endfor %}  
 
     </div>
 
     {% include 'meetings/includes/paginator.html' %}
 
   </section>
+</div>
 
   {% if not request.user.is_authenticated %}
-  <section style="margin-top: 100px;">
+  <section style="padding-top: 100px; padding-bottom: 100px; margin-top: 50px; background-color: #140023; color: #C77DFF;">
 
-    <div class="row">
-      <center>
-        <div class="col">
-            <h1>Присоединяйтесь</h1>
+    <div class="container">
+      <div class="row justify-content-center" style="text-align: center;">
+          <div class="col">
+              <h1>Присоединяйтесь</h1>
 
-            <p>
-              Готовы расширить свой кругозор? <br>
-              Не упустите целый мир возможностей. <br>
-              Зарегистрируйтесь в сети и откройте двери к успеху. <br>
-              Пришло время налаживать связи!
-            </p>
+              <p>
+                Готовы расширить свой кругозор? <br>
+                Не упустите целый мир возможностей. <br>
+                Зарегистрируйтесь в сети и откройте двери к успеху. <br>
+                Пришло время налаживать связи!
+              </p>
 
-            <a href="{% url 'users:signup' %}" class="align-self-end btn btn-lg btn-block" style="margin-top: 30px; width: 350px; background-color: #e80000; color: white">Зарегистрироваться</a>
-        </div>
-      </center>
+              <a href="{% url 'users:signup' %}">
+                <button type="button" class="btn" style="background-color: #C77DFF; color: white;">Зарегистрироваться</button>
+              </a>
+          </div>
+       </div>
     </div>
 
   </section>
+
   {% endif %}
 
 {% endblock %}

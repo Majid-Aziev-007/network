@@ -4,29 +4,44 @@
 NetWork - {{ topic }}
 {% endblock %} 
 {% block content %}
-<h1 style="margin-top: 80px; text-align: center; margin-bottom: 60px; color: black;">
-  Нетворкинг Встречи
-</h1> 
-
-<div class="row row-cols-2 row-cols-md-2 row-cols-xxl-4 g-4">
-
-  {% for meeting in page_obj %}
-
-  <div class="col">
-    <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
-      <div>
-        {% thumbnail meeting.image "1200x800" as im %}
-          <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
-        {% endthumbnail %}
-        <h6 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h6>
-        <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
-      </div>
-    </a>
-  </div>
+<div class="container">
+  <section style="color: #140023;">
   
-  {% endfor %} 
+    <div class="row">
+      <div class="col">
+        <h2 style="margin-top: 60px; text-align: left; margin-bottom: 30px; font-weight: 800;">
+          ВСТРЕЧИ - {{ topic }}
+        </h2> 
+      </div>
+    </div>
 
-</div>
-{% include 'meetings/includes/paginator.html' %}
-</section>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-4 g-4">
+
+      {% for meeting in page_obj %}
+
+      <div class="col">
+        <div class="card h-100 ivent-body">
+          <div class="card-body">
+              <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
+              <h6 class="card-title" style="font-weight: 600; color: #140023; margin: 10px;">{{ meeting.title }}</h6>
+              </a>
+          </div>
+          <center>
+            {% thumbnail meeting.image "1200x800" as im %}
+              <img class="card-img-bottom" src="{{ im.url }}" style="border-radius: 10px; width: 80%; margin-bottom: 15px;">
+            {% endthumbnail %}
+          </center>
+          <div class="card-footer">
+            <a class="nav-link" style="font-weight: 300;">{{ meeting.meeting_date }}</a>
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}  
+
+    </div>
+
+    {% include 'meetings/includes/paginator.html' %}
+
+  </section>
 {% endblock %} 

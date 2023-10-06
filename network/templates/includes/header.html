@@ -1,41 +1,31 @@
 {% load static %}
-<!-- Yandex.RTB R-A-3225814-1 -->
-<div id="yandex_rtb_R-A-3225814-1"></div>
-<script>
-window.yaContextCb.push(()=>{
-	Ya.Context.AdvManager.render({
-		"blockId": "R-A-3225814-1",
-		"renderTo": "yandex_rtb_R-A-3225814-1"
-	})
-})
-</script>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg" style="background-color: #240046;">
     <div class="container">
-    <a class="navbar-brand" href="#" style="color: #e80000; font-weight: bold;">NETWORK-PLACE.RU</a>
+    <a class="navbar-brand" href="#" style="color: #C77DFF; font-weight: bold; letter-spacing: 3px;">NETWORK-PLACE</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <i class="fa-solid fa-bars" style="color: #C77DFF;"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0" style="margin-left: auto;">
         <div class="row" style="margin-bottom: -20px;">
             {% with request.resolver_match.view_name as view_name %}  
               <li class="nav-item col">
-                <a class="nav-link" style="text-align: center; color: black;" href="{% url 'meetings:index' %}">
+                <a class="nav-link" style="text-align: center; color: #C77DFF;" href="{% url 'meetings:index' %}">
                   <i class="fa-regular fa-map fa-lg" aria-hidden="true"></i>
                   <p style="font-weight: 300; font-size:small;">Главная</p>        
                 </a>
               </li>
               {% if request.user.is_authenticated %}
                   <li class="nav-item col">
-                    <a class="nav-link" style="text-align: center; color: black;" href="{% url 'customers:profile' %}">
+                    <a class="nav-link" style="text-align: center; color: #C77DFF;" href="{% url 'customers:profile' %}">
                       <i class="fa-regular fa-user fa-lg" aria-hidden="true"></i>
                       <p style="font-weight: 300; font-size:small;">Профиль</p>        
                     </a>
                   </li>
                   {% if request.user.get_group_permissions %}
                     <li class="nav-item col">
-                      <a class="nav-link" style="text-align: center; color: black;" href="{% url 'panelcreator:panel' %}">
+                      <a class="nav-link" style="text-align: center; color: #C77DFF;" href="{% url 'panelcreator:panel' %}">
                         <i class="fa-regular fa-address-card fa-lg" aria-hidden="true"></i>
                         <p style="font-weight: 300; font-size:small;">Панель</p>        
                       </a>
@@ -43,20 +33,20 @@ window.yaContextCb.push(()=>{
                   {% endif %}
                 {% else %}
                   <li class="nav-item col">
-                    <a class="nav-link" style="text-align: center; color: black;" href="{% url 'users:login' %}">
+                    <a class="nav-link" style="text-align: center; color: #C77DFF;" href="{% url 'users:login' %}">
                       <i class="fa-regular fa-user fa-lg"></i>
                       <p style="font-weight: 300; font-size:small;">Войти</p>        
                     </a>
                   </li>
                   <li class="nav-item col">
-                    <a class="nav-link" style="text-align: center; color: black;" href="{% url 'users:signup' %}">
+                    <a class="nav-link" style="text-align: center; color: #C77DFF;" href="{% url 'users:signup' %}">
                       <i class="fa-regular fa-address-card fa-lg" aria-hidden="true"></i>
                       <p style="font-weight: 300; font-size:small;">Регистрация</p>        
                     </a>
                   </li>
               {% endif %}
               <li class="nav-item col">
-                <a class="nav-link" style="text-align: center; color: black;" href="#">
+                <a class="nav-link" style="text-align: center; color: #C77DFF;" href="#">
                   <i class="fa-regular fa-circle-question fa-lg" aria-hidden="true"></i>
                   <p style="font-weight: 300; font-size:small;">Вопросы</p>        
                 </a>
@@ -66,12 +56,12 @@ window.yaContextCb.push(()=>{
       </ul>
       <form class="d-flex">
         <input autocomplete="on" name="search" class="form-control me-2" type="search" placeholder="Найти.." aria-label="Search">
-        <button class="btn" style="background-color: #e80000; color: white;" type="submit">ПОИСК</button>
+        <button class="btn" style="background-color: #C77DFF; color: white; border-radius: 5px;" type="submit">ПОИСК</button>
       </form>
     </div>
 </nav>
 
-<ul class="nav justify-content-center" style="background-color: #e80000; font-weight:500;">
+<ul class="nav justify-content-center" style="background-color: #C77DFF; font-weight:500;">
   <li class="nav-item">
     <a class="nav-link" style="color: white;" aria-current="page" href="{% url 'meetings:index' %}">Общее</a>
   </li>    

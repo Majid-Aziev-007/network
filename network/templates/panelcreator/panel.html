@@ -6,68 +6,53 @@ NetWork - Панель Креатора
 
 {% block content %}
 
-<div style="color: black;">
+<section style="padding-top: 70px;">
+    <div class="container">
 
-    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-        <h1 style="font-weight: 600; font-weight: bold;">ПАНЕЛЬ УПРАВЛЕНИЯ</h1>
-    </div>
+        <div class="row justify-content-center">
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3" style="margin-bottom: 30px;">
-
-        <div class="col">
-            <div class="card bg-success mb-1" style="color: white;">
-                <div class="card-header">{{ earned }} RUB</div>
-                <div class="card-body">
-                  <h5 class="card-title"><i class="fa fa-money" aria-hidden="true"></i> Заработано без комиссии</h5>
-                </div>
-            </div>     
-        </div>
-        
-        <div class="col">
-            <div class="card bg-danger mb-1" style="color: white;">
-                <div class="card-header">{{ percentage_of_earned }} RUB</div>
-                <div class="card-body">
-                  <h5 class="card-title"><i class="fa fa-mouse-pointer" aria-hidden="true"></i> Заработано всего с комиссией</h5>
-                </div>
-            </div>    
-        </div>
-
-        <div class="col">
-            <div class="card bg-info mb-1" style="color: white;">
-                <div class="card-header">{{ paid }} RUB</div>
-                <div class="card-body">
-                  <h5 class="card-title"><i class="fa fa-male" aria-hidden="true"></i> Выплачено</h5>
-                </div>
-            </div>        
-        </div>
-
-    </div>
-    <hr>
-    <h2>Ваши мероприятия:</h2>
-    <div class="row row-cols-2 row-cols-md-2 row-cols-xxl-4 g-4" style="margin-bottom: 30px;">
-            {% for meeting in meetings %}
+            <div class="col-12 col-md-4">
+                <ul class="list-group" style="margin-bottom: 30px;">
+                    <li class="list-group-item">Заработано без комиссии: <b>{{ earned }} RUB</b></li>
+                    <li class="list-group-item">Заработано с комиссией: <b>{{ percentage_of_earned }} RUB</b></li>
+                    <li class="list-group-item">Выплачено: <b>{{ paid }} RUB</b></li>
+                </ul>
+            </div>
 
             <div class="col">
-              <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
-                <div>
-                  {% thumbnail meeting.image "1200x800" as im %}
-                    <img class="card-img-top" src="{{ im.url }}" style="border-radius: 15px;">
-                  {% endthumbnail %}
-                  <h6 class="card-title" style="font-weight: bold; margin-top: 5px; color: black;">{{ meeting.title }}</h6>
-                  <a class="nav-link" style="font-weight: 300; margin-bottom: 15px;">{{ meeting.meeting_date }}</a>
-                  <p style="font-weight: bold;">Участники: {{ meeting.np_panel }}</p>
-                </div>
-              </a>
-            </div>
-                
-            {% endfor %} 
-    </div>
+                <h2 style="font-weight: bold; color: #140023;">Ваши мероприятия:</h2>
 
-</div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-4">
+
+                    {% for meeting in meetings %}
+              
+                    <div class="col">
+                        <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
+                        <div class="card h-100 ivent-body">
+                            <div class="card-body">
+                                <h6 class="card-title" style="font-weight: 600; color: #140023; margin: 10px;">{{ meeting.title }}</h6>
+                            </div>
+                            <center>
+                            {% thumbnail meeting.image "1200x800" as im %}
+                                <img class="card-img-bottom" src="{{ im.url }}" style="border-radius: 10px; width: 80%; margin-bottom: 15px;">
+                            {% endthumbnail %}
+                            </center>
+                            <div class="card-footer">
+                            <a class="nav-link" style="font-weight: 300;">{{ meeting.meeting_date }} | Участники: {{ meeting.np_panel }}</a>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    
+                    {% endfor %}  
+              
+                  </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}
-
-
-1. Курсы которые есть
-2. Сколько человек записалось
-3. Сколько принесли курсы

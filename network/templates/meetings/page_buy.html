@@ -10,7 +10,7 @@ NetWork - Место Встречи
         <div class="col-lg-7 pb-5 pe-lg-5">
             <div class="row">
                 <div class="col-12 p-5">
-                    <h1 style="color:black; text-align: center;">NETWORK</h1>
+                    <h1 style="color:#140023; text-align: center;">NETWORK</h1>
                 </div>
                 <div class="row m-0">
                     <div class="col-10 ps-30 pe-0 my-4">
@@ -66,7 +66,7 @@ NetWork - Место Встречи
                         <div class="col-12 px-4 my-4">
                             <p class="fw-bold">Payment detail</p>
                             {% if status == False %}
-                                <p style="color: red;">Оплаты Нет</p>
+                                <p style="color: #fa2929;">Оплаты Нет</p>
                             {% endif %}
                         </div>
                         <div class="col-12 px-4">
@@ -89,7 +89,7 @@ NetWork - Место Встречи
                     <div class="row m-0">
                         <div class="col-12 mb-4 p-0">
                             {% if base_url %}
-                                <div class="btn btn-lg btn-block" style="width: 100%; background-color: #e80000;">
+                                <div class="btn btn-lg btn-block" style="width: 100%; background-color: #C77DFF;">
                                     <a href="{{ base_url }}" style="color: white;">
                                     Оплатить
                                     </a>
@@ -103,7 +103,7 @@ NetWork - Место Встречи
             </div>
         </div>
     </div>
-    <div class="btn btn-lg btn-block" style="margin-top: 20px; background-color: #e80000; border-radius: 0px;">
+    <div class="btn btn-lg btn-block" style="margin-top: 20px; background-color: #C77DFF; border-radius: 0px;">
         <a href="{% url 'meetings:buy_check' meeting_id %}" style="text-align: center; color: white;">
             Проверить Оплату
         </a>

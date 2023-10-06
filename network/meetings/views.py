@@ -41,7 +41,7 @@ def index(request):
     # Проверяем был ли поиск
     if search_query:
         # Если был поиск, фильтруем митинги по запросу
-        meeting_list = Meeting.objects.filter(address__icontains=search_query).order_by('-meeting_date')
+        meeting_list = Meeting.objects.filter(title__icontains=search_query).order_by('-meeting_date')
 
     else:
         # Список нетворкингов
@@ -70,7 +70,7 @@ def topic_meetings(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
 
     if search_query:
-        meeting_list = Meeting.objects.filter(topic=topic, address__icontains=search_query).order_by('-meeting_date')
+        meeting_list = Meeting.objects.filter(topic=topic, title__icontains=search_query).order_by('-meeting_date')
 
     else:
         meeting_list = Meeting.objects.filter(topic=topic).order_by('-meeting_date')
