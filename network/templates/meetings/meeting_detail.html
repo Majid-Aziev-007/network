@@ -17,11 +17,11 @@ NetWork - Место Встречи
         
         <div class="row">
 
-          <div class="col-lg-8">      
+          <div class="col-lg-9">      
             <p class="card-text">{{ meeting.description|linebreaks }}</p>
           </div>
 
-          <div class="col-lg-4">
+          <div class="col-lg-3">
                 {% thumbnail meeting.image "1200x800" as im %}
                   <img class="card-img-top" src="{{ im.url }}" style="border-radius: 10px;">
                 {% endthumbnail %}
@@ -41,7 +41,7 @@ NetWork - Место Встречи
 
                 <a
                 class="btn btn-lg shadow"
-                style="width: 100%; background-color: #C77DFF; color: white;"
+                style="width: 100%; background-color: #0d0d0d; color: #f2f2f2;"
                 href="{% url 'meetings:page_buy' meeting.id %}" role="button">
                   {{ price_meeting }}
                 </a> 

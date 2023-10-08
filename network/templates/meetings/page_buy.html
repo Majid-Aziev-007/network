@@ -89,11 +89,11 @@ NetWork - Место Встречи
                     <div class="row m-0">
                         <div class="col-12 mb-4 p-0">
                             {% if base_url %}
-                                <div class="btn btn-lg btn-block" style="width: 100%; background-color: #C77DFF;">
-                                    <a href="{{ base_url }}" style="color: white;">
+                                <div class="btn btn-lg btn-block" style="width: 100%; background-color: #0d0d0d;">
+                                    <a href="{{ base_url }}" style="color: #f2f2f2;">
                                     Оплатить
                                     </a>
-                                    <span class="fas fa-arrow-right ps-2" style="color: white;"></span>
+                                    <span class="fas fa-arrow-right ps-2" style="color: #f2f2f2;"></span>
                                 </div>
                             {% endif %}
                             
@@ -103,8 +103,8 @@ NetWork - Место Встречи
             </div>
         </div>
     </div>
-    <div class="btn btn-lg btn-block" style="margin-top: 20px; background-color: #C77DFF; border-radius: 0px;">
-        <a href="{% url 'meetings:buy_check' meeting_id %}" style="text-align: center; color: white;">
+    <div class="btn btn-lg btn-block" style="margin-top: 20px; background-color: #0d0d0d; border-radius: 0px;">
+        <a href="{% url 'meetings:buy_check' meeting_id %}" style="text-align: center; color: #f2f2f2;">
             Проверить Оплату
         </a>
     </div>

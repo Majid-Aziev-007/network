@@ -17,6 +17,18 @@ NetWork - Панель Креатора
                     <li class="list-group-item">Заработано с комиссией: <b>{{ percentage_of_earned }} RUB</b></li>
                     <li class="list-group-item">Выплачено: <b>{{ paid }} RUB</b></li>
                 </ul>
+
+                <a href="{% url 'meetings:meeting_create' %}">
+                    <button type="button" class="btn" style="background-color: #0d0d0d; color: #f2f2f2; font-size: 15px; font-weight: 600;">
+                        Создать Нетворк
+                    </button>
+                </a>
+        
+                <a href="{% url 'customers:key_valid' %}">
+                    <button type="button" class="btn" style="background-color: #0d0d0d; color: #f2f2f2; font-size: 15px; font-weight: 600;">
+                        Проверить ключ
+                    </button>
+                </a>
             </div>
 
             <div class="col">
