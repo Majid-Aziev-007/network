@@ -1,29 +1,65 @@
 {% load static %}
-<ul class="nav nav-pills nav-fill" style="margin: 30px; font-family: 'LT Streetway Neue', sans-serif;">
-  {% with request.resolver_match.view_name as view_name %}  
-      <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'meetings:index' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Главная</a>
-      </li>
-    {% if request.user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'customers:profile' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Профиль</a>
-      </li>
-      {% if request.user.get_group_permissions %}
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'meetings:meeting_create' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Создать Нетворк</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'customers:key_valid' %}" style="background-color: #4dff00; border-radius: 140px; font-weight: bold;">Проверить Ключ</a>
-        </li>
-      {% endif %}
-    {% else %}
-      <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:login' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Войти</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'users:signup' %}" style="background-color: white; border-radius: 140px; font-weight: bold;">Регистрация</a>
-      </li>
-    {% endif %}
-  {% endwith %}
+<nav id="header" class="navbar navbar-expand-lg header blackcolorclass">
+    <div class="container">
+    <a class="navbar-brand" href="#" style="color: #f2f2f2; font-weight: bold; letter-spacing: 3px;">NETWORK-PLACE</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars" style="color: #f2f2f2;"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0" style="margin-left: auto;">
+        <div class="row" style="margin-bottom: -20px;">
+            {% with request.resolver_match.view_name as view_name %}  
+              <li class="nav-item col">
+                <a class="nav-link" style="text-align: center; color: #f2f2f2;" href="{% url 'meetings:index' %}">
+                  <i class="fa-regular fa-map fa-lg" aria-hidden="true"></i>
+                  <p style="font-weight: 300; font-size:small;">Главная</p>        
+                </a>
+              </li>
+              {% if request.user.is_authenticated %}
+                  <li class="nav-item col">
+                    <a class="nav-link" style="text-align: center; color: #f2f2f2;" href="{% url 'customers:profile' %}">
+                      <i class="fa-regular fa-user fa-lg" aria-hidden="true"></i>
+                      <p style="font-weight: 300; font-size:small;">Профиль</p>        
+                    </a>
+                  </li>
+                  {% if request.user.get_group_permissions %}
+                    <li class="nav-item col">
+                      <a class="nav-link" style="text-align: center; color: #f2f2f2;" href="{% url 'panelcreator:panel' %}">
+                        <i class="fa-regular fa-address-card fa-lg" aria-hidden="true"></i>
+                        <p style="font-weight: 300; font-size:small;">Панель</p>        
+                      </a>
+                    </li>
+                  {% endif %}
+                {% else %}
+                  <li class="nav-item col">
+                    <a class="nav-link" style="text-align: center; color: #f2f2f2;" href="{% url 'users:login' %}">
+                      <i class="fa-regular fa-user fa-lg"></i>
+                      <p style="font-weight: 300; font-size:small;">Войти</p>        
+                    </a>
+                  </li>
+                  <li class="nav-item col">
+                    <a class="nav-link" style="text-align: center; color: #f2f2f2;" href="{% url 'users:signup' %}">
+                      <i class="fa-regular fa-address-card fa-lg" aria-hidden="true"></i>
+                      <p style="font-weight: 300; font-size:small;">Регистрация</p>        
+                    </a>
+                  </li>
+              {% endif %}
+              <li class="nav-item col">
+                <a class="nav-link" style="text-align: center; color: #f2f2f2;" href="#">
+                  <i class="fa-regular fa-circle-question fa-lg" aria-hidden="true"></i>
+                  <p style="font-weight: 300; font-size:small;">Вопросы</p>        
+                </a>
+              </li>
+          {% endwith %}
+        </div>
+      </ul>
+      <form class="d-flex">
+        <input autocomplete="on" name="search" class="form-control me-2" type="search" placeholder="Найти.." aria-label="Search">
+        <button class="btn" style="background-color: #f2f2f2; color: #0d0d0d; border-radius: 5px;" type="submit">ПОИСК</button>
+      </form>
+    </div>
+</nav>
+
+<ul class="nav justify-content-center" style="background-color: #ebebeb;">
+      <!-- Вот тут обновления -->
 </ul>
-<hr style="color: white">

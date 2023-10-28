@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Key
 from .forms import KeyForm
 from datetime import timedelta
+from panelcreator.models import Creator
 
 @login_required
 def profile(request):
@@ -32,7 +33,9 @@ def key_valid(request, key_input = None):
         key_input - Ввод ключа
     """
 
-    if request.user.get_group_permissions():
+    creator = Creator.objects.filter(user=request.user).exists()
+
+    if creator:
 
         # Если key_input передан
         if key_input:

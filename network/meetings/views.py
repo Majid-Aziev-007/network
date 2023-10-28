@@ -8,6 +8,8 @@ from customers.models import Key
 import random
 from datetime import date
 from yoomoney import Quickpay, Client
+import datetime
+from panelcreator.models import Creator
 
 User = get_user_model()
 
@@ -39,13 +41,13 @@ def index(request):
     # Проверяем был ли поиск
     if search_query:
         # Если был поиск, фильтруем митинги по запросу
-        meeting_list = Meeting.objects.filter(address__icontains=search_query).order_by('-pub_date')
+        meeting_list = Meeting.objects.filter(title__icontains=search_query).order_by('-meeting_date')
 
     else:
         # Список нетворкингов
-        meeting_list = Meeting.objects.all().order_by('-pub_date')
+        meeting_list = Meeting.objects.all().order_by('-meeting_date')
 
-    paginator = Paginator(meeting_list, 6)
+    paginator = Paginator(meeting_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -68,12 +70,12 @@ def topic_meetings(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
 
     if search_query:
-        meeting_list = Meeting.objects.filter(topic=topic, address__icontains=search_query).order_by('-pub_date')
+        meeting_list = Meeting.objects.filter(topic=topic, title__icontains=search_query).order_by('-meeting_date')
 
     else:
-        meeting_list = Meeting.objects.filter(topic=topic).order_by('-pub_date')
+        meeting_list = Meeting.objects.filter(topic=topic).order_by('-meeting_date')
 
-    paginator = Paginator(meeting_list, 6)
+    paginator = Paginator(meeting_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -92,6 +94,22 @@ def meeting_detail(request, meeting_id):
 
     # Получение нетворкинга детальнее
     meeting = get_object_or_404(Meeting, pk=meeting_id)
+    
+    # Получаем дату митинга
+    meeting_date = int(meeting.meeting_date.strftime("%Y%m%d%H%M%S"))
+
+    # Получаем дату сейчас
+    datetime_now = int(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+
+    # Сравниваем дату митинга и сейчас
+    if meeting_date < datetime_now:
+
+        # Мероприятие устарело, показываем это
+        context = {
+            'finish': True,
+        }
+
+        return render(request, 'meetings/meeting_detail.html', context)
 
     # Получение цены нетворкинга
     price_meeting = f'{meeting.price} RUB'
@@ -139,8 +157,10 @@ def meeting_create(request):
         Создание Нетворка
     """
 
-    if request.user.get_group_permissions():
-        form = MeetingForm(request.POST, files=request.FILES or None)
+    creator = Creator.objects.filter(user=request.user).exists()
+
+    if creator:
+        form = MeetingForm(request.POST, files=request.FILES)
         if request.method == 'POST':
             if form.is_valid():
                 post = form.save(commit=False)

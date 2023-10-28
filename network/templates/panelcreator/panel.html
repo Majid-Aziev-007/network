@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}
+NetWork - Панель Креатора
+{% endblock %} 
+
+{% block content %}
+
+<section style="padding-top: 70px;">
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-12 col-md-4">
+                <ul class="list-group" style="margin-bottom: 30px;">
+                    <li class="list-group-item">Заработано без комиссии: <b>{{ earned }} RUB</b></li>
+                    <li class="list-group-item">Заработано с комиссией: <b>{{ percentage_of_earned }} RUB</b></li>
+                    <li class="list-group-item">Выплачено: <b>{{ paid }} RUB</b></li>
+                </ul>
+
+                <a href="{% url 'meetings:meeting_create' %}">
+                    <button type="button" class="btn" style="background-color: #0d0d0d; color: #f2f2f2; font-size: 15px; font-weight: 600;">
+                        Создать Нетворк
+                    </button>
+                </a>
+        
+                <a href="{% url 'customers:key_valid' %}">
+                    <button type="button" class="btn" style="background-color: #0d0d0d; color: #f2f2f2; font-size: 15px; font-weight: 600;">
+                        Проверить ключ
+                    </button>
+                </a>
+            </div>
+
+            <div class="col">
+                <h2 style="font-weight: bold; color: #140023;">Ваши мероприятия:</h2>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-4">
+
+                    {% for meeting in meetings %}
+              
+                    <div class="col">
+                        <a href="{% url 'meetings:meeting_detail' meeting.pk %}">
+                        <div class="card h-100 ivent-body">
+                            <div class="card-body">
+                                <h6 class="card-title" style="font-weight: 600; color: #140023; margin: 10px;">{{ meeting.title }}</h6>
+                            </div>
+                            <center>
+                            {% thumbnail meeting.image "1200x800" as im %}
+                                <img class="card-img-bottom" src="{{ im.url }}" style="border-radius: 10px; width: 80%; margin-bottom: 15px;">
+                            {% endthumbnail %}
+                            </center>
+                            <div class="card-footer">
+                            <a class="nav-link" style="font-weight: 300;">{{ meeting.meeting_date }} | Участники: {{ meeting.np_panel }}</a>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    
+                    {% endfor %}  
+              
+                  </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

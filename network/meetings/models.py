@@ -31,6 +31,11 @@ class Meeting(models.Model):
     )
     title = models.CharField(max_length=200)
     description = models.TextField()
+    image = models.ImageField(
+        'Картинка',
+        upload_to='meetings/',
+        blank=True
+    )
     price = models.IntegerField()
     meeting_date = models.DateTimeField(
         blank=True,
@@ -50,6 +55,7 @@ class Meeting(models.Model):
         on_delete=models.CASCADE,
         related_name='topic'
     )
+    np_panel = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -59,8 +65,7 @@ class Presence(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='participant',
-        null=True
+        related_name='presence',
     )
 
     meeting = models.ForeignKey(

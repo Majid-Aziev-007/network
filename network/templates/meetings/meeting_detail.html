@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block title %}
 NetWork - Место Встречи
 {% endblock %} 
 {% block content %}
 
-    <div class="card" style="background-color: #white; font-family: 'Naston', sans-serif; border-radius: 10px;">
+{% if not finish %}
+
+<div class="container">
+
+    <div class="card" style="border-radius: 10px; margin-top: 50px;">
       <div class="card-body d-flex flex-column">
         {% if meeting.type == "ON" %}   
-          <h2 class="card-title" style="font-weight: bold; text-align: center; margin-bottom: 15px;">ОНЛАЙН МЕРОПРИЯТИЕ</h2>
+          <h2 class="card-title" style="font-weight: bold; text-align: left; margin-bottom: -5px;">ОНЛАЙН МЕРОПРИЯТИЕ</h2>
         {% endif %}
         
         <div class="row">
 
-          <div class="col-lg-8">      
+          <div class="col-lg-9">      
             <p class="card-text">{{ meeting.description|linebreaks }}</p>
           </div>
 
-          <div class="col-lg-4">
+          <div class="col-lg-3">
+                {% thumbnail meeting.image "1200x800" as im %}
+                  <img class="card-img-top" src="{{ im.url }}" style="border-radius: 10px;">
+                {% endthumbnail %}
                 <h2 class="card-title" style="font-weight: bold;">{{ meeting.title }}</h2>
                 {% if meeting.topic %}   
                   <a href="{% url 'meetings:topic_list' meeting.topic.slug %}" class="nav-link" style="font-weight: bold;">Тема: {{ meeting.topic }}</a>
@@ -32,8 +40,8 @@ NetWork - Место Встречи
                 <p class="card-text" style="margin-top: -20px;"><small class="text-body-secondary">Автор: @{{ meeting.author }}</small></p>
 
                 <a
-                class="btn btn-lg btn-black shadow"
-                style="width: 100%;"
+                class="btn btn-lg shadow"
+                style="width: 100%; background-color: #0d0d0d; color: #f2f2f2;"
                 href="{% url 'meetings:page_buy' meeting.id %}" role="button">
                   {{ price_meeting }}
                 </a> 
@@ -42,4 +50,17 @@ NetWork - Место Встречи
         </div>
       </div>
     </div>
+
+  {% else %}
+  <div style="margin-bottom: 200px; margin-top: 10%;">
+    <center>
+        <h1>МЕРОПРИЯТИЕ ПРОШЛО</h1>
+        <h6>Мероприятие уже прошло, 
+          <a href="{% url 'meetings:index' %}">вернуться на главную страницу</a>
+        </h6>
+    </center>
+  </div>
+  {% endif %}
+</div>
+
 {% endblock %}
