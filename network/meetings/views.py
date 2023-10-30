@@ -111,6 +111,15 @@ def meeting_detail(request, meeting_id):
 
         return render(request, 'meetings/meeting_detail.html', context)
 
+    if meeting.price == 0:
+        context = {
+            'meeting': meeting,
+            'price_meeting': 'Бесплатно',
+            'presence': 'Вход бесплатный'
+        }
+
+        return render(request, 'meetings/meeting_detail.html', context)
+
     # Получение цены нетворкинга
     price_meeting = f'{meeting.price} RUB'
 
@@ -185,6 +194,20 @@ def page_buy(request, meeting_id):
 
     # Получение нетворкинга
     meeting = get_object_or_404(Meeting, pk=meeting_id)
+
+    # Если мероприятие бесплатно
+    if meeting.price == 0:
+        # Генерация Ключа
+        key = str(random.randint(1000000000000000000000, 9999999999999999999999))
+        link = "https://network-place.ru/profile/key-valid/" + key
+
+        # Создание Ключа
+        Key.objects.get_or_create(key=key, link=link, user=request.user, meeting=meeting)
+
+        # Создание Присутствия
+        Presence.objects.get_or_create(user=request.user, meeting=meeting)
+
+        return redirect('customers:profile')
 
     # Создание label для оплаты подписки
     label_str = str(f'{request.user}{date.today()}{meeting.id}')
